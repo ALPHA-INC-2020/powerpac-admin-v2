@@ -1,22 +1,13 @@
 <template>
-  <div
-    class="alert alert-success mt-3"
-    role="alert"
-    :style="isVisible? 'display: block': 'display:none'"
+  <CAlert
+    :show.sync="dismissCountDown"
+    closeButton
+    color="success"
+    fade
+    v-if="isVisible"
   >
-    {{ successText}} <router-link
-      v-show="link != null"
-      :to="{name: link}"
-    ><small> {{ linkText }}</small></router-link>
-    <button
-      type="button"
-      class="close"
-      data-dismiss="alert"
-      aria-label="Close"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
+    {{successText}}
+  </CAlert>
 </template>
 
 <script>
@@ -27,7 +18,8 @@ export default {
       isVisible: false,
       successText: '',
       linkText: '',
-      link: ''
+      link: '',
+      dismissCountDown: 10
     }
   },
   created () {

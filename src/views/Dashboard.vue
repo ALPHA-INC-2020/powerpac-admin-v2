@@ -1,16 +1,25 @@
 <template>
   <div>
-    <WidgetsDropdown/>
+    <WidgetsDropdown />
     <CCard>
       <CCardBody>
         <CRow>
           <CCol sm="5">
-            <h4 id="traffic" class="card-title mb-0">Traffic</h4>
+            <h4
+              id="traffic"
+              class="card-title mb-0"
+            >Traffic</h4>
             <div class="small text-muted">November 2017</div>
           </CCol>
-          <CCol sm="7" class="d-none d-md-block">
-            <CButton color="primary" class="float-right">
-              <CIcon name="cil-cloud-download"/>
+          <CCol
+            sm="7"
+            class="d-none d-md-block"
+          >
+            <CButton
+              color="primary"
+              class="float-right"
+            >
+              <CIcon name="cil-cloud-download" />
             </CButton>
             <CButtonGroup class="float-right mr-3">
               <CButton
@@ -26,11 +35,15 @@
             </CButtonGroup>
           </CCol>
         </CRow>
-        <MainChartExample style="height:300px;margin-top:40px;"/>
+        <MainChartExample style="height:300px;margin-top:40px;" />
       </CCardBody>
       <CCardFooter>
         <CRow class="text-center">
-          <CCol md sm="12" class="mb-sm-2 mb-0">
+          <CCol
+            md
+            sm="12"
+            class="mb-sm-2 mb-0"
+          >
             <div class="text-muted">Visits</div>
             <strong>29.703 Users (40%)</strong>
             <CProgress
@@ -40,7 +53,11 @@
               :value="40"
             />
           </CCol>
-          <CCol md sm="12" class="mb-sm-2 mb-0 d-md-down-none">
+          <CCol
+            md
+            sm="12"
+            class="mb-sm-2 mb-0 d-md-down-none"
+          >
             <div class="text-muted">Unique</div>
             <strong>24.093 Users (20%)</strong>
             <CProgress
@@ -50,7 +67,11 @@
               :value="20"
             />
           </CCol>
-          <CCol md sm="12" class="mb-sm-2 mb-0">
+          <CCol
+            md
+            sm="12"
+            class="mb-sm-2 mb-0"
+          >
             <div class="text-muted">Pageviews</div>
             <strong>78.706 Views (60%)</strong>
             <CProgress
@@ -60,7 +81,11 @@
               :value="60"
             />
           </CCol>
-          <CCol md sm="12" class="mb-sm-2 mb-0">
+          <CCol
+            md
+            sm="12"
+            class="mb-sm-2 mb-0"
+          >
             <div class="text-muted">New Users</div>
             <strong>22.123 Users (80%)</strong>
             <CProgress
@@ -70,7 +95,11 @@
               :value="80"
             />
           </CCol>
-          <CCol md sm="12" class="mb-sm-2 mb-0 d-md-down-none">
+          <CCol
+            md
+            sm="12"
+            class="mb-sm-2 mb-0 d-md-down-none"
+          >
             <div class="text-muted">Bounce Rate</div>
             <strong>Average Rate (40.15%)</strong>
             <CProgress
@@ -82,7 +111,7 @@
         </CRow>
       </CCardFooter>
     </CCard>
-    <WidgetsBrand/>
+    <WidgetsBrand />
     <CRow>
       <CCol md="12">
         <CCard>
@@ -91,7 +120,10 @@
           </CCardHeader>
           <CCardBody>
             <CRow>
-              <CCol sm="12" lg="6">
+              <CCol
+                sm="12"
+                lg="6"
+              >
                 <CRow>
                   <CCol sm="6">
                     <CCallout color="info">
@@ -242,15 +274,28 @@
                 </div>
                 <div class="legend text-center">
                   <small>
-                    <sup><CBadge shape="pill" color="info">&nbsp;</CBadge></sup>
+                    <sup>
+                      <CBadge
+                        shape="pill"
+                        color="info"
+                      >&nbsp;</CBadge>
+                    </sup>
                     New clients
                     &nbsp;&nbsp;
-                    <sup><CBadge shape="pill" color="danger">&nbsp;</CBadge></sup>
+                    <sup>
+                      <CBadge
+                        shape="pill"
+                        color="danger"
+                      >&nbsp;</CBadge>
+                    </sup>
                     Recurring clients
                   </small>
                 </div>
               </CCol>
-              <CCol sm="12" lg="6">
+              <CCol
+                sm="12"
+                lg="6"
+              >
                 <CRow>
                   <CCol sm="6">
                     <CCallout color="warning">
@@ -269,7 +314,10 @@
                 <ul class="horizontal-bars type-2">
                   <div class="progress-group">
                     <div class="progress-group-header">
-                      <CIcon name="cil-user" class="progress-group-icon"/>
+                      <CIcon
+                        name="cil-user"
+                        class="progress-group-icon"
+                      />
                       <span class="title">Male</span>
                       <span class="ml-auto font-weight-bold">43%</span>
                     </div>
@@ -283,7 +331,10 @@
                   </div>
                   <div class="progress-group mb-5">
                     <div class="progress-group-header">
-                      <CIcon name="cil-user-female" class="progress-group-icon"/>
+                      <CIcon
+                        name="cil-user-female"
+                        class="progress-group-icon"
+                      />
                       <span class="title">Female</span>
                       <span class="ml-auto font-weight-bold">37%</span>
                     </div>
@@ -297,7 +348,10 @@
                   </div>
                   <div class="progress-group">
                     <div class="progress-group-header">
-                      <CIcon name="cil-globe-alt" class="progress-group-icon"/>
+                      <CIcon
+                        name="cil-globe-alt"
+                        class="progress-group-icon"
+                      />
                       <span class="title">Organic Search</span>
                       <span class="ml-auto font-weight-bold">
                         191,235 <span class="text-muted small">(56%)</span>
@@ -372,14 +426,18 @@
                     </div>
                   </div>
                   <div class="divider text-center">
-                    <CButton color="link" size="sm" class="text-muted">
-                      <CIcon name="cil-options"/>
+                    <CButton
+                      color="link"
+                      size="sm"
+                      class="text-muted"
+                    >
+                      <CIcon name="cil-options" />
                     </CButton>
                   </div>
                 </ul>
               </CCol>
             </CRow>
-            <br/>
+            <br />
             <CDataTable
               class="mb-0 table-outline"
               hover
@@ -388,16 +446,27 @@
               head-color="light"
               no-sorting
             >
-              <td slot="avatar" class="text-center" slot-scope="{item}">
+              <td
+                slot="avatar"
+                class="text-center"
+                slot-scope="{item}"
+              >
                 <div class="c-avatar">
-                  <img :src="item.avatar.url" class="c-avatar-img" alt="">
+                  <img
+                    :src="item.avatar.url"
+                    class="c-avatar-img"
+                    alt=""
+                  >
                   <span
                     class="c-avatar-status"
                     :class="`bg-${item.avatar.status || 'secondary'}`"
                   ></span>
                 </div>
               </td>
-              <td slot="user" slot-scope="{item}">
+              <td
+                slot="user"
+                slot-scope="{item}"
+              >
                 <div>{{item.user.name}}</div>
                 <div class="small text-muted">
                   <span>
@@ -416,7 +485,10 @@
                   height="25"
                 />
               </td>
-              <td slot="usage" slot-scope="{item}">
+              <td
+                slot="usage"
+                slot-scope="{item}"
+              >
                 <div class="clearfix">
                   <div class="float-left">
                     <strong>{{item.usage.value}}%</strong>
@@ -441,7 +513,10 @@
                   height="25"
                 />
               </td>
-              <td slot="activity" slot-scope="{item}">
+              <td
+                slot="activity"
+                slot-scope="{item}"
+              >
                 <div class="small text-muted">Last login</div>
                 <strong>{{item.activity}}</strong>
               </td>

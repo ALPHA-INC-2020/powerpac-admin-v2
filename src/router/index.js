@@ -6,6 +6,10 @@ const TheContainer = () => import('@/containers/TheContainer')
 
 // Views
 const Dashboard = () => import('@/views/Dashboard')
+const Products = () => import('@/views/Products/Products')
+const Orders = () => import('@/views/Orders/Orders')
+const UpdateProduct = () => import('@/views/Products/updateProduct')
+const NewProduct = () => import('@/views/Products/newProduct')
 
 const Colors = () => import('@/views/theme/Colors')
 const Typography = () => import('@/views/theme/Typography')
@@ -78,6 +82,38 @@ function configRoutes () {
           path: 'dashboard',
           name: 'Dashboard',
           component: Dashboard,
+          meta: {
+            authOnly: true
+          }
+        },
+        {
+          path: 'products',
+          name: 'Products',
+          component: Products,
+          meta: {
+            authOnly: true
+          }
+        },
+        {
+        path: 'updateProduct',
+          name: 'updateProduct',
+          component: UpdateProduct,
+          meta: {
+            authOnly: true
+          }
+        },
+        {
+        path: 'products/new',
+          name: 'newProduct',
+          component: NewProduct,
+          meta: {
+            authOnly: true
+          }
+        },
+            {
+          path: 'orders',
+          name: 'Orders',
+          component: Orders,
           meta: {
             authOnly: true
           }

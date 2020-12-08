@@ -1,16 +1,19 @@
 <template>
   <div>
     <CRow>
-      <CCol col="12" md="6">
+      <CCol
+        col="12"
+        md="6"
+      >
         <CCard>
           <CCardHeader>
-            <CIcon name="cil-justify-center"/>
+            <CIcon name="cil-justify-center" />
             <strong> Bootstrap Dropdown</strong>
             <div class="card-header-actions">
-              <a 
-                href="https://coreui.io/vue/docs/components/dropdown" 
-                class="card-header-action" 
-                rel="noreferrer noopener" 
+              <a
+                href="https://coreui.io/vue/docs/components/dropdown"
+                class="card-header-action"
+                rel="noreferrer noopener"
                 target="_blank"
               >
                 <small class="text-muted">docs</small>
@@ -19,42 +22,35 @@
           </CCardHeader>
           <CCardBody>
             <div>
-              <CDropdown 
-                toggler-text="Dropdown Button" 
+              <CDropdown
+                toggler-text="Dropdown Button"
                 class="m-2"
                 color="secondary"
               >
                 <CDropdownItem>First Action</CDropdownItem>
                 <CDropdownItem>Second Action</CDropdownItem>
                 <CDropdownItem>Third Action</CDropdownItem>
-                <CDropdownDivider/>
+                <CDropdownDivider />
                 <CDropdownItem>Something else here...</CDropdownItem>
                 <CDropdownItem disabled>Disabled action</CDropdownItem>
               </CDropdown>
             </div>
-            <!-- <div>
-              <CDropdown toggler-text="Dropdown using buttons as menu items" class="m-2">
-                <CDropdownItem>I'm a button</CDropdownItem>
-                <CDropdownItem>I'm also a button</CDropdownItem>
-                <CDropdownItem disabled>I'm a button, but disabled!</CDropdownItem>
-                <CDropdownItem>I don't look like a button, but I am!</CDropdownItem>
-              </CDropdown>
-            </div> -->
+
             <div>
-              <CDropdown 
-                toggler-text="Dropdown with divider" 
+              <CDropdown
+                toggler-text="Dropdown with divider"
                 class="m-2"
                 color="secondary"
               >
                 <CDropdownItem>First item</CDropdownItem>
                 <CDropdownItem>Second item</CDropdownItem>
-                <CDropdownDivider/>
+                <CDropdownDivider />
                 <CDropdownItem>Separated Item</CDropdownItem>
               </CDropdown>
             </div>
             <div>
-              <CDropdown 
-                toggler-text="Dropdown with header" 
+              <CDropdown
+                toggler-text="Dropdown with header"
                 class="m-2"
                 color="secondary"
               >
@@ -66,10 +62,13 @@
           </CCardBody>
         </CCard>
       </CCol>
-      <CCol col="12" md="6">
+      <CCol
+        col="12"
+        md="6"
+      >
         <CCard>
           <CCardHeader>
-            <CIcon name="cil-justify-center"/>
+            <CIcon name="cil-justify-center" />
             <strong> Dropdown </strong>
             <small>positioning</small>
           </CCardHeader>
@@ -101,7 +100,6 @@
                 color="info"
                 class="m-2"
                 placement="top-start"
-
               >
                 <CDropdownItem>Action</CDropdownItem>
                 <CDropdownItem>Another action</CDropdownItem>
@@ -137,10 +135,13 @@
       </CCol>
     </CRow>
     <CRow>
-      <CCol col="12" md="6">
+      <CCol
+        col="12"
+        md="6"
+      >
         <CCard>
           <CCardHeader>
-            <CIcon name="cil-justify-center"/>
+            <CIcon name="cil-justify-center" />
             <strong> Dropdown </strong>
             <small>hidden caret</small>
           </CCardHeader>
@@ -162,10 +163,13 @@
           </CCardBody>
         </CCard>
       </CCol>
-      <CCol col="12" md="6">
+      <CCol
+        col="12"
+        md="6"
+      >
         <CCard>
           <CCardHeader>
-            <CIcon name="cil-justify-center"/>
+            <CIcon name="cil-justify-center" />
             <strong> Dropdown </strong>
             <small>sizing</small>
           </CCardHeader>
@@ -206,7 +210,8 @@
               <CDropdown
                 color="secondary"
                 size="sm"
-                split toggler-text="Small Split"
+                split
+                toggler-text="Small Split"
                 class="m-2"
               >
                 <CDropdownItem>Action</CDropdownItem>
@@ -219,17 +224,21 @@
       </CCol>
     </CRow>
     <CRow>
-      <CCol col="12" md="6">
+      <CCol
+        col="12"
+        md="6"
+      >
         <CCard>
           <CCardHeader>
-            <CIcon name="cil-justify-center"/>
+            <CIcon name="cil-justify-center" />
             <strong> Dropdown </strong>
             <small>headers and accessibility</small>
           </CCardHeader>
           <CCardBody>
             <div>
               <CDropdown
-                toggler-text="Dropdown ARIA" color="primary"
+                toggler-text="Dropdown ARIA"
+                color="primary"
                 class="m-2"
               >
                 <div role="group">
@@ -242,7 +251,7 @@
                   <CDropdownItem>Add</CDropdownItem>
                   <CDropdownItem>Delete</CDropdownItem>
                 </div>
-                <CDropdownDivider/>
+                <CDropdownDivider />
                 <CDropdownItem>
                   Something <strong>not</strong> associated with user
                 </CDropdownItem>
@@ -251,10 +260,13 @@
           </CCardBody>
         </CCard>
       </CCol>
-      <CCol col="12" md="6">
+      <CCol
+        col="12"
+        md="6"
+      >
         <CCard>
           <CCardHeader>
-            <CIcon name="cil-justify-center"/>
+            <CIcon name="cil-justify-center" />
             <strong> Dropdown </strong>
             <small><code>color</code></small>
           </CCardHeader>

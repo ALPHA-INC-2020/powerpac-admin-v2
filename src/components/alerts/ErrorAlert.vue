@@ -1,19 +1,13 @@
 <template>
-  <div
-    class="alert alert-danger"
-    role="alert"
-    :style="isVisible? 'display: block': 'display:none'"
+  <CAlert
+    :show.sync="dismissCountDown"
+    closeButton
+    color="danger"
+    fade
+    v-if="isVisible"
   >
-    {{ errorText}}
-    <button
-      type="button"
-      class="close"
-      data-dismiss="alert"
-      aria-label="Close"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
+    {{errorText}}
+  </CAlert>
 </template>
 
 <script>
@@ -22,12 +16,17 @@ export default {
   data () {
     return {
       isVisible: false,
-      errorText: ''
+      errorText: '',
+      linkText: '',
+      link: '',
+      dismissCountDown: 10
     }
   },
   created () {
-    EventBus.$on('error_occur', (errorText) => {
+    EventBus.$on('error_occur', (errorText, linkText = null, link = null) => {
       this.errorText = errorText;
+      this.linkText = linkText;
+      this.link = link;
       this.isVisible = true;
     })
   }

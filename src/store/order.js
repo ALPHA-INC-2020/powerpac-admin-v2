@@ -11,11 +11,9 @@ export const orderModule = {
         DELETE_ONE_ORDER(state, payload) {
             state.allOrders.splice(payload, 1);
         },
-
     },
     actions: {
         loadOrders({ commit }) {
-            console.log("loading order");
             return Order.getAllOrders().then(res => {
                 if (res.status === 200) {
                     commit('SET_ORDERS', res.data)
@@ -25,9 +23,7 @@ export const orderModule = {
         updateStatus({commit}, payload) {
             return Order.updateStatus(payload)
         },
-
         deleteOrder({
-
             commit,
             state
         }, id) {

@@ -30,7 +30,7 @@ export const productModule = {
 
         ) {
             return Product.getAllProducts().then((response) => {
-                commit('SET_PRODUCTS', response.data[1])
+                commit('SET_PRODUCTS', response.data)
             })
         },
         deleteProduct({

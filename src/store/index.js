@@ -1,5 +1,19 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import {
+  productModule
+} from './product';
+import {
+  promotionModule
+} from './promotion';
+import {
+  cloudinaryModule
+} from './cloudinary';
+import {
+  orderModule
+} from './order'
+
+
 Vue.use(Vuex)
 
 const state = {
@@ -39,8 +53,17 @@ const getters = {
   }
 }
 
+const modules = {
+  productModule: productModule,
+  orderModule: orderModule,
+  promotionModule: promotionModule,
+  cloudinaryModule: cloudinaryModule
+}
+
 export default new Vuex.Store({
+  namespaced: true,
   state,
   mutations,
-  getters
+  getters,
+  modules
 })

@@ -9,6 +9,7 @@ import store from './store/index.js'
 Vue.config.performance = true
 Vue.use(CoreuiVue)
 Vue.prototype.$log = console.log.bind(console)
+export const EventBus = new Vue();
 
 new Vue({
   el: '#app',
