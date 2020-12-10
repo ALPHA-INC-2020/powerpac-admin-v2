@@ -3,18 +3,21 @@
     <CRow>
       <CCol sm="12">
         <CTableWrapper
+          statusAlter='status'
           :items="allOrders"
           hover
           striped
           bordered
           small
           fixed
+          :updateAction="{action: 'updateStatus'}"
           :deleteAction="{action: 'deleteOrder', apiObj: Order}"
           caption="Orders"
           deleteExist
           statusUpdate
           :titleButton="{exist: false}"
           edit
+          :statusOptions="options"
           :fields=" ['id', 'customer_name', 'customer_address', 'phone_no', 'email', 'status', 'actions']"
         />
 
@@ -33,7 +36,14 @@ import Order from '@/apis/Order.js'
 export default {
   data () {
     return {
-      Order
+      Order,
+      options: [
+        { value: 'complete', text: 'Completed', color: 'success' },
+        { value: 'confirm', text: 'Confirmed', color: 'primary' },
+        { value: 'inprogress', text: 'In Progress', color: 'info' },
+        { value: 'pending', text: 'Pending', color: 'warning' },
+        { value: 'cancel', text: 'Cancel', color: 'danger' }
+      ]
     }
   },
   components: { CTableWrapper },

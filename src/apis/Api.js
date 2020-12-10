@@ -16,4 +16,8 @@ let Api = function() {
     return BaseApi;
 };
 
+
+export const wait = t => new Promise(resolve => setTimeout(resolve, t));
+
+
 export default Api;

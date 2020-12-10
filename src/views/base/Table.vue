@@ -38,6 +38,11 @@
           :dark="dark"
           pagination
         >
+          <template #productName="{item}">
+            <td>
+              <CBadge>{{item.productName}} {{item.isNewRelease}}</CBadge>
+            </td>
+          </template>
           <template #status="{item}">
             <td>
               <CBadge :color="getBadge(item.order_status)">{{item.order_status}}</CBadge>
@@ -74,7 +79,10 @@
                   <CIcon name="cil-settings" />
                 </template>
                 <CDropdownItem v-show="edit">edit</CDropdownItem>
-                <CDropdownItem v-show="statusUpdate">update sale</CDropdownItem>
+                <CDropdownItem
+                  v-show="statusUpdate"
+                  @click="openStatusModal(item)"
+                >update status</CDropdownItem>
                 <CDropdownItem
                   @click="openModal(item)"
                   class="text-danger"
@@ -114,9 +122,67 @@
         <CButton
           @click="deleteItem()"
           color="danger"
-        >Delete</CButton>
+          :disabled="deleteButtonLoading"
+        >
+          <span v-if="!deleteButtonLoading">Delete</span>
+          <CSpinner
+            v-else
+            color="light"
+            size="sm"
+          />
+        </CButton>
       </template>
     </CModal>
+    <CModal
+      :show.sync="statusUpdateModal"
+      :no-close-on-backdrop="true"
+      :centered="true"
+      title="Warning!"
+      size="sm"
+      color="warning"
+    >
+
+      <CListGroup
+        v-for="(item,index) in statusOptions"
+        :key="index"
+      >
+        <CListGroupItem
+          @click="status = item.value"
+          class="list-gp my-2"
+        >
+          <div class="d-flex justify-content-around align-items-center">
+            <input
+              type="radio"
+              :id="'status'+ item.value"
+              name="status"
+              v-model="status"
+              :value="item.value"
+            >
+            <label :for="'status'+item.value">{{item.text}}</label>
+          </div>
+
+        </CListGroupItem>
+      </CListGroup>
+
+      <template #header>
+        <h6 class="modal-title">Change Status</h6>
+        <CButtonClose
+          @click="statusUpdateModal = false"
+          class="text-white"
+        />
+      </template>
+      <template #footer>
+        <CButton
+          @click="statusUpdateModal = false"
+          color="danger"
+        >Cancel</CButton>
+        <CButton
+          @click="updateSale()"
+          color="success"
+        >Update</CButton>
+      </template>
+    </CModal>
+
   </div>
 </template>
 
@@ -131,6 +197,18 @@ export default {
   },
   name: 'Table',
   props: {
+
+    statusOptions: {
+      type: Array,
+      required: true
+    },
+    updateAction: {
+      action: {
+        type: 'String'
+      },
+
+
+    },
     deleteAction: {
       action: {
         type: 'String'
@@ -193,19 +271,49 @@ export default {
   },
   data () {
     return {
+      status: '',
       deleteModal: false,
+      statusUpdateModal: false,
+      deleteButtonLoading: false,
       deleteId: '',
       deleteSuccessMsg: 'Delete Success!',
-      deleteErrorMsg: 'Error On Delete. Try Again!'
+      deleteErrorMsg: 'Error On Delete. Try Again!',
+      statusId: ''
     }
   },
   methods: {
+    updateSale () {
+      let payload = {
+        id: this.statusId,
+        status: this.status
+      }
+
+      const { action } = this.updateAction;
+      this.$store.dispatch(action, payload).then((status) => {
+        if (status === 200) {
+          this.statusUpdateModal = false
+          EventBus.$emit('success', 'Success Update!')
+
+        } else {
+          this.statusUpdateModal = false
+          EventBus.$emit('error_occur', 'error')
+
+
+        }
+
+      }).catch((err) => {
+        this.statusUpdateModal = false
+        EventBus.$emit('error_occur', err)
+
+      })
+    },
     deleteItem () {
       const { action, apiObj } = this.deleteAction;
       this.$store.dispatch(action, this.deleteId);
-
+      this.deleteButtonLoading = true;
       apiObj[action](this.deleteId).then(response => {
         if (response.status == 200) {
+          this.deleteButtonLoading = false
           this.deleteModal = false;
           EventBus.$emit('success', this.deleteSuccessMsg)
         } else {
@@ -220,6 +328,10 @@ export default {
       this.deleteId = item.id
       this.deleteModal = true
     },
+    openStatusModal (item) {
+      this.statusId = item.id
+      this.statusUpdateModal = true
+    },
     getBadge (status) {
       return status === 'complete' ? 'success'
         : status === 'confirm' ? 'primary'
@@ -232,3 +344,10 @@ export default {
   }
 }
 </script>
+
+
+<style scoped>
+.list-gp {
+  cursor: pointer;
+}
+</style>

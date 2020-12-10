@@ -1,5 +1,4 @@
 import Api from "./Api";
-
 export default {
     getAllProducts() {
         return Api().get("/get/product");
@@ -8,7 +7,8 @@ export default {
         return Api().post('/create/product', data)
     },
     deleteProduct(id) {
-        return Api().post(`/delete/product/${id}`);
+            return Api().post(`/delete/product/${id}`);
+    
     },
     updateProduct(id, data) {
         return Api().post(`/update/product/${id}`, data)

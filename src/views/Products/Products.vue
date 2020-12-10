@@ -9,6 +9,7 @@
           bordered
           small
           fixed
+          :updateAction="{action: 'updateSale'}"
           :deleteAction="{action: 'deleteProduct', apiObj: Product}"
           deleteExist
           statusUpdate
@@ -17,9 +18,9 @@
           newRelease
           popular
           caption="Products"
+          :statusOptions="options"
           :fields=" ['id', 'model', 'productName', 'realPrice', 'brand', 'sale','imageURLs','type', 'actions']"
         />
-
       </CCol>
     </CRow>
 
@@ -33,7 +34,12 @@ import Product from '@/apis/Product.js'
 export default {
   data () {
     return {
-      Product
+      Product,
+      options: [
+        { value: 'onsale', text: 'On Sale', color: 'success' },
+        { value: 'preorder', text: 'Pre Order', color: 'primary' },
+        { value: 'outstock', text: 'Out of Stock', color: 'danger' },
+      ]
     }
   },
   components: { CTableWrapper },

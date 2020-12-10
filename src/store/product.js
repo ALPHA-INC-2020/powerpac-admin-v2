@@ -13,6 +13,10 @@ export const productModule = {
         },
         ADD_ONE_PRODUCT(state, payload) {
             state.allProducts.push(payload);
+        },
+        UPDATE_SALE(state, payload) {
+            var index = state.allProducts.findIndex(obj => obj.id === payload.id);
+            state.allProducts[index].sale = payload.status;
         }
     },
     getters: {
@@ -50,7 +54,13 @@ export const productModule = {
         updateSale({
             commit
         }, payload) {
-            return Product.updateSale(payload)
+            return new Promise((resolve, reject) => {
+                Product.updateSale(payload).then(res => {
+                    if (res.status === 200)  resolve(res.status);
+                }).then(() => {
+                    commit('UPDATE_SALE', payload)
+                }).catch(err => reject(err))
+            })
         },
         updatePopular({
             commit
