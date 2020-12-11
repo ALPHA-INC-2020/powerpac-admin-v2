@@ -114,10 +114,9 @@
                         <button @click="deleteDetailItem(index)"
                                 type="button"
                                 class="btn btn-sm">
-                                        <CIcon name="cil-x" />
-                                      </button>
+                                          <CIcon name="cil-x" />
+                                        </button>
                       </div>
-
                     </li>
                   </ul>
                 </CCardBody>
@@ -126,24 +125,24 @@
           </CRow>
           <CRow class="d-flex justify-content-center mb-4">
             <span class="mr-3">
-                            <input
-                              checked
-                              type="checkbox"
-                              class="mr-3"
-                              v-model="form.isNewRelease"
-                              id="new"
-                            />
-                            <label for="new">Add To New Released</label>
-                          </span>
+                              <input
+                                checked
+                                type="checkbox"
+                                class="mr-3"
+                                v-model="form.isNewRelease"
+                                id="new"
+                              />
+                              <label for="new">Add To New Released</label>
+                            </span>
             <span class="ml-1">
-                            <input
-                              type="checkbox"
-                              v-model="form.isPopular"
-                              id="trend"
-                              class="mr-3"
-                            />
-                            <label for="trend">Add to Trending Now</label>
-                          </span>
+                              <input
+                                type="checkbox"
+                                v-model="form.isPopular"
+                                id="trend"
+                                class="mr-3"
+                              />
+                              <label for="trend">Add to Trending Now</label>
+                            </span>
           </CRow>
           <CButton color="primary" block
                    :disabled="loading"
@@ -185,23 +184,29 @@
       }
     },
     methods: {
-      prepareData () {
-          this.loading = true;
-          this.images.forEach((file, index) => {
-            if (helper.checkImageExistsOnServer(file) == 200 && helper.validURL(file)) {
-              if (index + 1 == this.images.length) this.updateProductInStore();
-            } else {
-              this.uploadFilesToCloudinary(file).then(res => {
-                if (res.length == this.images.length) {
-                  this.form.imageURLs = res;
-                  this.updateProductInStore();
-                }
-              })
-            }
-          });
-        },
+      prepareData() {
+        this.loading = true
+        this.images.forEach((file, index) => {
+          if (helper.checkImageExistsOnServer(file) === 200 && helper.validURL(file)) {
+            this.form.imageURLs.push(file)
+            // //
+            // console.log('on server')
+            this.checkE()
+          } else {
+            console.log('not on server')
+            this.uploadFilesToCloudinary(file).then(({ url }) => {
+              // this.updateProductInStore();
+              this.checkE()
+            })
+          }
+        })
+      },
+      checkE() {
+        if(this.images.length === this.form.imageURLs.length) {
+          this.updateProductInStore();
+        }
+      },
       updateProductInStore() {
-
         this.$store
           .dispatch('updateProduct', this.form)
           .then(res => {
@@ -216,8 +221,6 @@
           .catch(err => {
             console.log(err)
           })
-
-
       },
       onFileChange(files) {
         if (!files.length) return
@@ -241,6 +244,10 @@
         this.form.imageURLs.forEach(imagePath => {
           this.images.push(imagePath)
         })
+
+        this.form.imageURLs = []
+
+        console.log(this.form.imageURLs)
       }
     },
     computed: {
@@ -249,7 +256,7 @@
         oldValue: 'getProductById'
       }),
       ...mapState({
-          cloudinary: state => state.cloudinaryModule
+        cloudinary: state => state.cloudinaryModule
       })
     },
     created() {

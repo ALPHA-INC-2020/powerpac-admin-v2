@@ -9,8 +9,9 @@ export default {
         uploadProduct() {
             this.loading = true;
             this.images.forEach((file) => {
-                this.uploadFilesToCloudinary(file, 'products').then((res) => {
-                    if (res.length == this.images.length) {
+                this.uploadFilesToCloudinary(file, 'products').then(({imageURLs}) => {
+
+                    if (imageURLs.length == this.images.length) {
                         this.form.navigator = this.form.productName.split(' ').join('_').replace('/', '_').replace('-', '_')
                         Product.uploadProduct(this.form).then((res) => {
                                 if (res.status == 200) {

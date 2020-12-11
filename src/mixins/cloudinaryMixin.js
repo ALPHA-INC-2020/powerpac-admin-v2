@@ -10,11 +10,9 @@ export default {
                         url: this.cloudinary.cloudinary_url,
                         data: formData
                     }).then((response) => {
-
                         if (response.status === 200) {
                             this.form.imageURLs.push(response.data.secure_url);
-                            resolve(this.form.imageURLs)
-
+                            resolve({imageURLs: this.form.imageURLs, url: response.data.secure_url})
                         }
                     }).catch((error) => {
                         console.log(error);
