@@ -10,8 +10,8 @@
                   <h1>Login</h1>
                   <p class="text-muted">Sign In to your account</p>
                   <CInput
-                    placeholder="Username"
-                    autocomplete="username email"
+                    placeholder="Email"
+                    autocomplete="email"
                     v-model="form.email"
                   >
                     <template #prepend-content>
@@ -65,7 +65,7 @@
             >
               <CCardBody>
                 <h2>Sign up</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p>Powerpac အတွက် admin panel ဖြစ်ပါတယ်။ ကိုယ်ပိုင်အချက်အလက်များ အသုံးပြုပြီး ဝင်ရောက်အသုံးပြုနိုင်ပါတယ်။</p>
                 <CButton
                   color="light"
                   variant="outline"

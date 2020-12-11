@@ -24,6 +24,7 @@ export const productModule = {
             return state.allProducts
         },
         getProductById: (state) => (id) => {
+          console.log(state)
             return state.allProducts.find(product => product.id === id)
         }
     },

@@ -11,6 +11,7 @@ const Orders = () => import('@/views/Orders/Orders')
 const UpdateProduct = () => import('@/views/Products/updateProduct')
 const NewProduct = () => import('@/views/Products/newProduct')
 
+
 const Colors = () => import('@/views/theme/Colors')
 const Typography = () => import('@/views/theme/Typography')
 
@@ -64,7 +65,7 @@ const User = () => import('@/views/users/User')
 Vue.use(Router)
 
 const router =  new Router({
-  mode: 'hash', // https://router.vuejs.org/api/#mode
+  mode: 'history', // https://router.vuejs.org/api/#mode
   linkActiveClass: 'active',
   scrollBehavior: () => ({ y: 0 }),
   routes: configRoutes()
@@ -95,7 +96,7 @@ function configRoutes () {
           }
         },
         {
-        path: 'updateProduct',
+        path: 'products/update/:id',
           name: 'updateProduct',
           component: UpdateProduct,
           meta: {

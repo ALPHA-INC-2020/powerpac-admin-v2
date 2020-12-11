@@ -8,7 +8,6 @@ export default {
     },
     deleteProduct(id) {
             return Api().post(`/delete/product/${id}`);
-    
     },
     updateProduct(id, data) {
         return Api().post(`/update/product/${id}`, data)

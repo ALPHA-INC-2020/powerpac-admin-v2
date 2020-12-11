@@ -14,7 +14,7 @@
           deleteExist
           statusUpdate
           :titleButton="{exist: true, link: 'newProduct', buttonText: 'Create New Product'}"
-          edit
+          :edit="{exist: true, route: 'updateProduct'}"
           newRelease
           popular
           caption="Products"
