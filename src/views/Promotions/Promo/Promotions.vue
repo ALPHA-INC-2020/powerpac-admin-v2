@@ -1,34 +1,45 @@
 <template>
   <div>
-
+    <CRow>
+      <CCol col="12">
+        <VueFaqAccordion
+          :items="myItems"
+          v-slot="title"
+        >
+          <p>{{title}}</p>
+        </VueFaqAccordion>
+      </CCol>
+    </CRow>
   </div>
 </template>
-
+ 
 <script>
-// import Promotion from '@/apis/Promotion'
-// import AppPageTitle from '@/components/AppPageTitle'
-// import { mapGetters } from 'vuex';
-// import PromotionBannerCard from '@/components/cards/PromotionBannerCard'
-// import PromotionContentCard from '@/components/cards/PromotionContentCard'
-// import DeleteDialog from '@/components/dialogs/DeleteDialog'
-// import UpdateConfirm from '@/components/dialogs/UpdateConfirm'
-// import SuccessAlert from '@/components/alerts/SuccessAlert'
-// import ErrorAlert from '@/components/alerts/ErrorAlert'
+import VueFaqAccordion from 'vue-faq-accordion'
+
 export default {
+  components: {
+    VueFaqAccordion
+  },
   data () {
     return {
-      // Promotion,
-      loading: false,
+      myItems: [
+        {
+          title: 'How many time zones are there in all?',
+          value: 'Given a 24-hour day and 360 degrees of longitude around the Earth',
+          category: 'Tab-1'
+        },
+        {
+          title: 'How long is a day and year on Venus?',
+          value: 'Venus takes 224.7 Earth days to complete one orbit around the Sun.',
+          category: 'Tab-2'
+        },
+        {
+          title: 'What animal smells like popcorn?',
+          value: 'Binturongs smell like popcorn.',
+          category: 'Tab-2'
+        }
+      ]
     }
-  },
-
-
-} 
-</script>
-
-<style scoped>
-.no-data-image {
-  height: 100px;
-  width: 100px;
+  }
 }
-</style>
+</script>
