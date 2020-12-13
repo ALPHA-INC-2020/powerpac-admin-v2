@@ -188,20 +188,19 @@
         this.loading = true
         this.images.forEach((file, index) => {
           if (helper.checkImageExistsOnServer(file) === 200 && helper.validURL(file)) {
-            this.form.imageURLs.push(file)
-            // //
-            // console.log('on server')
+            console.log('ON SERVER')
             this.checkE()
           } else {
             console.log('not on server')
-            this.uploadFilesToCloudinary(file).then(({ url }) => {
-              // this.updateProductInStore();
+            this.uploadFilesToCloudinary(file).then(() => {
               this.checkE()
             })
           }
         })
       },
       checkE() {
+        console.log(this.images.length);
+        console.log(this.form.imageURLs.length)
         if(this.images.length === this.form.imageURLs.length) {
           this.updateProductInStore();
         }
@@ -239,15 +238,14 @@
       },
       removeImage(index) {
         this.images.splice(index, 1)
+        this.form.imageURLs.splice(index,1)
       },
       collectImages() {
         this.form.imageURLs.forEach(imagePath => {
           this.images.push(imagePath)
         })
 
-        this.form.imageURLs = []
 
-        console.log(this.form.imageURLs)
       }
     },
     computed: {

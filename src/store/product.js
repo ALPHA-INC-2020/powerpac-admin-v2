@@ -17,6 +17,14 @@ export const productModule = {
         UPDATE_SALE(state, payload) {
             var index = state.allProducts.findIndex(obj => obj.id === payload.id);
             state.allProducts[index].sale = payload.status;
+        },
+        UPDATE_ADDITIONAL_STATUS(state, payload) {
+            var index = state.allProducts.findIndex(obj => obj.id === payload.id);
+            if(payload.type === 'New Release') {
+            state.allProducts[index].isNewRelease = !payload.status
+            }else {
+            state.allProducts[index].isPopular = !payload.status
+            }
         }
     },
     getters: {
@@ -63,15 +71,19 @@ export const productModule = {
                 }).catch(err => reject(err))
             })
         },
-        updatePopular({
+        updateAdditionalStatus({
             commit
         }, payload) {
-            return Product.updatePopular(payload);
+
+            return new Promise((resolve, reject) => {
+                 Product.updateAdditionalStatus(payload).then(res => {
+                     if(res.status === 200) resolve(res.status);
+                 }).then(() => {
+                     commit('UPDATE_ADDITIONAL_STATUS', payload)
+                 }).catch(err => reject(err));
+            })
+        
         },
-        updateNewReleased({
-            commit
-        }, payload) {
-            return Product.updateNewReleased(payload);
-        }
+
     }
 }

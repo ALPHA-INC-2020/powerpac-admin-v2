@@ -19,7 +19,8 @@
           popular
           caption="Products"
           :statusOptions="options"
-          :fields=" ['id', 'model', 'productName', 'realPrice', 'brand', 'sale','imageURLs','type', 'actions']"
+          :fields=" ['id', 'model', 'productName', 'realPrice', 'brand', 'sale','additional','imageURLs','type', 'actions']"
+          :additional="true"
         />
       </CCol>
     </CRow>

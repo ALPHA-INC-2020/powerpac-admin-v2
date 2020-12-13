@@ -10,6 +10,7 @@ const Products = () => import('@/views/Products/Products')
 const Orders = () => import('@/views/Orders/Orders')
 const UpdateProduct = () => import('@/views/Products/updateProduct')
 const NewProduct = () => import('@/views/Products/newProduct')
+const Promotions = () => import('@/views/Promotions/Promo/Promotions')
 
 
 const Colors = () => import('@/views/theme/Colors')
@@ -107,6 +108,14 @@ function configRoutes () {
         path: 'products/new',
           name: 'newProduct',
           component: NewProduct,
+          meta: {
+            authOnly: true
+          }
+        },
+                {
+        path: 'promotions',
+          name: 'Promotions',
+          component: Promotions,
           meta: {
             authOnly: true
           }

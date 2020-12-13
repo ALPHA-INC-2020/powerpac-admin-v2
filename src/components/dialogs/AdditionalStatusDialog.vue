@@ -1,42 +1,29 @@
 <template>
-  <div
-    class="confirmation_dialog fade-in"
-    :style="isVisible? 'display:flex': 'display:none'"
+  <CModal
+    title="Confirmation!"
+    color="warning"
+    :show.sync="isVisible"
   >
-
-    <div class="confirm_child_box">
-      <span
-        class="delete_icon"
-        @click="isVisible = false; isPop = ''"
+    Are you sure to {{status? 'remove from' : 'add to'}} {{type}}
+    <template #footer>
+      <CButton
+        @click="isVisible = false"
+        color="danger"
+      >Discard</CButton>
+      <CButton
+        @click="updateAdditionalStatus()"
+        color="success"
+        :disabled="isLoading"
       >
-        <i class="fas fa-times"></i>
-      </span>
-      <div class="confirm_heading_text">
-        <p v-if="isPop">Are you sure to <span class="text-danger">remove</span> from <b>Popular Product</b>. id - {{productId}}</p>
-        <p v-else>Are you sure to <span class="text-success">add</span> to <b>Popular Product</b>. id - {{productId}}</p>
-      </div>
-      <div class="action_buttons">
-        <div
-          class="btn btn-success cancel_btn"
-          @click="isVisible = false; isPop = ''"
-        >Cancel <i class="fas fa-undo-alt"></i></div>
-        <button
-          class="btn btn-primary"
-          type="button"
-          @click="updatePopular()"
-          :disabled=isLoading
-        >{{ isLoading? 'Updating' : 'Change' }}<i
-            class="fas fa-wrench"
-            v-show="!isLoading"
-          ></i> <span
-            v-show="isLoading"
-            class="spinner-grow spinner-grow-sm"
-            role="status"
-            aria-hidden="true"
-          ></span></button>
-      </div>
-    </div>
-  </div>
+        <span v-if="!isLoading">Save</span>
+        <CSpinner
+          v-else
+          color="light"
+          size="sm"
+        />
+      </CButton>
+    </template>
+  </CModal>
 </template>
 
 <script>
@@ -44,15 +31,17 @@ import { EventBus } from '../../main'
 
 export default {
   created () {
-    EventBus.$on('callPopularConfirmBox', (id, isPopular) => {
+    EventBus.$on('callAdditionalConfirmBox', (id, status, type) => {
       this.productId = id;
-      this.isPop = isPopular;
+      this.status = status;
+      this.type = type
       this.isVisible = true;
     });
   },
   data () {
     return {
-      isPop: '',
+      type: '',
+      status: '',
       isLoading: false,
       isVisible: false,
       errorText: "Error on changing popularproduct",
@@ -61,19 +50,19 @@ export default {
     }
   },
   methods: {
-    updatePopular () {
+    updateAdditionalStatus () {
       var payload = {
         id: this.productId,
-        isPopular: this.isPop
+        status: this.status,
+        type: this.type
       }
       this.isLoading = true;
 
-      this.$store.dispatch('updatePopular', payload).then((res) => {
-        if (res.status === 200) {
+      this.$store.dispatch('updateAdditionalStatus', payload).then((res) => {
+        if (res === 200) {
           this.isLoading = false;
           EventBus.$emit('success', this.successText)
-          var index = this.$store.state.productModule.allProducts.findIndex(obj => obj.id == payload.id)
-          this.$parent.allProducts[index].isPopular = !payload.isPopular
+
           this.isVisible = false
         } else {
           this.isLoading = false;
@@ -82,7 +71,7 @@ export default {
         }
 
       })
-    }
+    },
   }
 
 }

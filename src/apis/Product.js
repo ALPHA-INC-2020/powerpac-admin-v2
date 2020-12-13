@@ -15,10 +15,11 @@ export default {
     updateSale(payload) {
         return Api().post(`/update/sale/${payload.id}`, payload)
     },
-    updatePopular(payload) {
-        return Api().post(`/update/isPopular/${payload.id}`, payload)
-    },
-    updateNewReleased(payload) {
+    updateAdditionalStatus(payload) {
+        if(payload.type == 'New Release') {
         return Api().post(`/update/isNewRelease/${payload.id}`, payload)
+        }
+        return Api().post(`/update/isPopular/${payload.id}`, payload)
+
     },
 }

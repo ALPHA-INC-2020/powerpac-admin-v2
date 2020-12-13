@@ -37,7 +37,7 @@ export default [{
       icon: 'cil-settings',
       items: [{
           name: 'Promotions',
-          to: '/base/breadcrumbs'
+          to: '/promotions'
         },
         {
           name: 'FAQS',

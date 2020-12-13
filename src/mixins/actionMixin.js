@@ -3,11 +3,10 @@ import { EventBus } from '../main'
 export default {
     methods: {
         callDeleteDialog({id, stateElement, stateAction}) {
-            console.log(id);
             EventBus.$emit('callDeleteDialog', id, stateElement, stateAction);
         },
-        callPopularConfirmBox(id, isPopular) {
-            EventBus.$emit('callPopularConfirmBox', id, isPopular);
+        callAdditionalConfirmBox(id, status, type) {
+            EventBus.$emit('callAdditionalConfirmBox', id, status, type);
         },
         callNewReleasedConfirmBox(id, isNewRelease) {
             EventBus.$emit('callNewReleasedConfirmBox', id, isNewRelease)
