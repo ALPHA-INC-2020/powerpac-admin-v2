@@ -7,10 +7,14 @@
       placeholder="Promotion Title"
       v-model="form.title"
     >
-    <vue-editor
+    <!-- <vue-editor
       v-model="form.content"
       placeholder="Promotion Content"
-    ></vue-editor>
+    ></vue-editor> -->
+    <VueEditor
+      v-model="form.content"
+      placeholder="Promotion Content"
+    ></VueEditor>
     <div>
 
       <div class="alert alert-warning mt-2">
@@ -49,11 +53,13 @@
                   class="rm-img"
                   @click="removeImage(index)"
                 >
-                  <unicon
-                    name="times"
-                    fill="black"
+                  <CIcon
+                    name="cil-x-circle"
                     class="icon"
-                  />
+                  >
+
+                  </CIcon>
+
                 </div>
               </div>
 
@@ -81,19 +87,23 @@
       </div>
 
     </div>
-    <button
-      class="btn btn-success btn-block my-2"
-      @click="uploadPromotion()"
+
+    <CButton
+      color="success"
+      class="mt-3"
+      block
       :disabled="loading"
+      @click="uploadPromotion()"
     >
-      <span
-        v-if="loading"
-        class="spinner-grow spinner-grow-sm"
-        role="status"
-        aria-hidden="true"
-      ></span>
-      {{loading? 'Creating' : 'Create'}}
-    </button>
+
+      <span v-if="!loading">Create</span>
+      <CSpinner
+        v-else
+        color="light"
+        size="sm"
+      />
+    </CButton>
+
     <div
       class="alert alert-danger mt-2"
       v-show="exceeded"
@@ -111,12 +121,13 @@ import NewPromotionMixin from '@/mixins/newPromotionMixin'
 import SuccessAlert from '@/components/alerts/SuccessAlert'
 import ErrorAlert from '@/components/alerts/ErrorAlert'
 
+
 export default {
   mixins: [NewPromotionMixin],
   components: {
     VueEditor,
     SuccessAlert,
-    ErrorAlert
+    ErrorAlert,
   },
   data () {
     return {

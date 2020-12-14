@@ -9,7 +9,17 @@
         md="6"
       >
 
-        <h1>Promotions</h1>
+        <div class="d-flex justify-content-between mb-3">
+          <h3>Promotions</h3>
+          <CButton
+            :to="{name: 'NewPromotion'}"
+            shape="pill"
+            color="primary"
+          >
+            <CIcon name="cil-plus"></CIcon>
+            New Promotion
+          </CButton>
+        </div>
         <div v-if="loadingPromotion">loading ...</div>
         <div v-else>
           <accordion
@@ -42,7 +52,7 @@
                     v-c-tooltip.hover.click="promotion.status? 'deactivate' : 'active'"
                   ></CIcon>
                 </CButton>
-                <CButton @click="callDeleteDialog(promotion.id, 'allPromotions', 'deletePromotion')">
+                <CButton @click="callDeleteDialog(promotion.id, 'allPromotions', 'deletePromotion', Promotion)">
                   <CIcon
                     class="action-icons"
                     name="cil-trash"
@@ -65,7 +75,17 @@
         sm="12"
         md="6"
       >
-        <h1>Banners</h1>
+        <div class="d-flex justify-content-between mb-3">
+          <h3>Banners</h3>
+          <CButton
+            shape="pill"
+            color="primary"
+            :to="{name: 'NewBanner'}"
+          >
+            <CIcon name="cil-plus"></CIcon>
+            New Banner
+          </CButton>
+        </div>
         <div v-if="loadingBanners">loading ...</div>
         <div v-else>
           <accordion
@@ -92,7 +112,7 @@
                     v-c-tooltip.hover.click="banner.status? 'deactivate' : 'active'"
                   ></CIcon>
                 </CButton>
-                <CButton>
+                <CButton @click="callDeleteDialog(banner.id, 'allBanners', 'deleteBanner', Promotion)">
                   <CIcon
                     class="pointer"
                     name="cil-trash"
@@ -106,6 +126,7 @@
       </CCol>
       <updateConfirm />
     </CRow>
+    <DeleteDialog />
   </div>
 
 </template>
@@ -118,6 +139,7 @@ import updateConfirm from '@/components/dialogs/UpdateConfirm.vue'
 import SuccessAlert from '@/components/alerts/SuccessAlert'
 import ErrorAlert from '@/components/alerts/ErrorAlert'
 import DeleteDialog from '@/components/dialogs/DeleteDialog'
+import Promotion from '@/apis/Promotion'
 
 
 export default {
@@ -125,14 +147,16 @@ export default {
   data () {
     return {
       loadingPromotion: false,
-      loadingBanners: false
+      loadingBanners: false,
+      Promotion
     }
   },
   components: {
     Accordion,
     updateConfirm,
     SuccessAlert,
-    ErrorAlert
+    ErrorAlert,
+    DeleteDialog
   },
   computed: {
     ...mapGetters({ allBanners: 'loadAllBanners', allPromotions: 'loadAllPromotions' })

@@ -11,6 +11,8 @@ const Orders = () => import('@/views/Orders/Orders')
 const UpdateProduct = () => import('@/views/Products/updateProduct')
 const NewProduct = () => import('@/views/Products/newProduct')
 const Promotions = () => import('@/views/Promotions/Promo/Promotions')
+const NewPromotion = () => import('@/views/Promotions/Promo/NewPromotion')
+const NewBanner = () => import('@/views/Promotions/Banner/NewBanner');
 
 
 const Colors = () => import('@/views/theme/Colors')
@@ -116,6 +118,22 @@ function configRoutes () {
         path: 'promotions',
           name: 'Promotions',
           component: Promotions,
+          meta: {
+            authOnly: true
+          }
+        },
+         {
+        path: 'new/promotion',
+          name: 'NewPromotion',
+          component: NewPromotion,
+          meta: {
+            authOnly: true
+          }
+        },
+         {
+        path: 'new/banner',
+          name: 'NewBanner',
+          component: NewPromotion,
           meta: {
             authOnly: true
           }

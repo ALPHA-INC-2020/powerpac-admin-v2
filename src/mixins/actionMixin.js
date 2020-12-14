@@ -2,8 +2,8 @@ import { EventBus } from '../main'
 
 export default {
     methods: {
-        callDeleteDialog({id, stateElement, stateAction}) {
-            EventBus.$emit('callDeleteDialog', id, stateElement, stateAction);
+        callDeleteDialog(id, stateElement, stateAction, apiObj) {
+            EventBus.$emit('callDeleteDialog', id, stateElement, stateAction, apiObj);
         },
         callAdditionalConfirmBox(id, status, type) {
             EventBus.$emit('callAdditionalConfirmBox', id, status, type);

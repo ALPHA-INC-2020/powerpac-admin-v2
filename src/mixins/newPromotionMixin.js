@@ -18,8 +18,8 @@ export default {
             } else {
                 this.loading = true;
                this.images.forEach((file) => {
-                this.uploadFilesToCloudinary(file, 'promotions').then((res) => {
-                    if (res.length == this.images.length) {
+                this.uploadFilesToCloudinary(file, 'promotions').then(({imageURLs}) => {
+                    if (imageURLs.length == this.images.length) {
                         Promotion.createPromotion(this.form).then((res) => {
                                 if (res.status == 200) {
                                     this.$store.commit('ADD_ONE_PROMOTION', res.data);

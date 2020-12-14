@@ -26,6 +26,7 @@ export const promotionModule = {
             state.allBanners.push(payload);
         },
         ADD_ONE_PROMOTION(state,payload) {
+            console.log(state.allPromotions)
             state.allPromotions.push(payload);
         }
     },

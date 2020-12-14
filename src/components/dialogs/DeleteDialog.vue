@@ -40,17 +40,14 @@
 import { EventBus } from '../../main'
 
 export default {
-  props: {
-    type: {
-      type: Object,
-      required: true
-    },
-  },
+
   created () {
-    EventBus.$on('callDeleteDialog', (id, stateElement, stateAction) => {
+    EventBus.$on('callDeleteDialog', (id, stateElement, stateAction, apiObj) => {
       this.action = stateAction;
       this.deleteId = id;
       this.isVisible = true;
+      this.apiObj = apiObj;
+
     });
   },
   data () {
@@ -58,6 +55,7 @@ export default {
       action: '',
       deleteId: '',
       isVisible: false,
+      apiObj: '',
       deleteButtonLoading: false,
       errorText: "Error on deleting product",
       successText: "Successfully deleted!"
@@ -68,7 +66,7 @@ export default {
     deleteConfirm () {
       this.deleteButtonLoading = true;
       this.$store.dispatch(this.action, this.deleteId);
-      this.type[this.action](this.deleteId).then(response => {
+      this.apiObj[this.action](this.deleteId).then(response => {
         if (response.status == 200) {
           this.isVisible = false;
           EventBus.$emit('success', this.successText)

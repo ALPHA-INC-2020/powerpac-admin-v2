@@ -44,8 +44,8 @@ export default [{
           to: '/base/cards'
         },
         {
-          name: 'Carousels',
-          to: '/base/carousels'
+          name: 'NewPromotion',
+          to: '/new/promotion'
         },
         {
           name: 'Collapses',
