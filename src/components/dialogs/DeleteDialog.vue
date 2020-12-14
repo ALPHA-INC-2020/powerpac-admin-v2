@@ -1,31 +1,39 @@
 <template>
-  <div
-    class="confirmation_dialog fade-in"
-    :style="isVisible? 'display:flex': 'display:none'"
+  <CModal
+    :show.sync="isVisible"
+    :no-close-on-backdrop="true"
+    :centered="true"
+    title="Warning!"
+    size="sm"
+    color="warning"
   >
-
-    <div class="confirm_child_box">
-      <span
-        class="delete_icon"
-        @click="isVisible = false"
+    Are you sure to delete?
+    <template #header>
+      <h6 class="modal-title">Warning!</h6>
+      <CButtonClose
+        @click="deleteModal = false"
+        class="text-white"
+      />
+    </template>
+    <template #footer>
+      <CButton
+        @click="deleteModal = false"
+        color="success"
+      >Cancel</CButton>
+      <CButton
+        @click="deleteConfirm()"
+        color="danger"
+        :disabled="deleteButtonLoading"
       >
-        <i class="fas fa-times"></i>
-      </span>
-      <div class="confirm_heading_text">
-        <p>Are you sure to delete id - {{deleteId}}</p>
-      </div>
-      <div class="action_buttons">
-        <div
-          class="btn btn-success cancel_btn"
-          @click="isVisible = false"
-        >Cancel <i class="fas fa-undo-alt"></i></div>
-        <div
-          class="btn btn-danger"
-          @click="deleteConfirm()"
-        >Delete <i class="fas fa-trash"></i> </div>
-      </div>
-    </div>
-  </div>
+        <span v-if="!deleteButtonLoading">Delete</span>
+        <CSpinner
+          v-else
+          color="light"
+          size="sm"
+        />
+      </CButton>
+    </template>
+  </CModal>
 </template>
 
 <script>
@@ -50,20 +58,27 @@ export default {
       action: '',
       deleteId: '',
       isVisible: false,
+      deleteButtonLoading: false,
       errorText: "Error on deleting product",
       successText: "Successfully deleted!"
     }
   },
   methods: {
+
     deleteConfirm () {
+      this.deleteButtonLoading = true;
       this.$store.dispatch(this.action, this.deleteId);
       this.type[this.action](this.deleteId).then(response => {
         if (response.status == 200) {
           this.isVisible = false;
           EventBus.$emit('success', this.successText)
+          this.deleteButtonLoading = false;
+
         } else {
           this.isVisible = false;
           EventBus.$emit('error_occur', this.errorText)
+          this.deleteButtonLoading = false;
+
         }
       });
 

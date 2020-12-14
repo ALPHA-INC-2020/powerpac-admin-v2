@@ -40,7 +40,6 @@
     "axios": "^0.21.0",
     "cloudinary-vue": "^1.1.2",
     "vue": "~2.6.11",
-    "vue-faq-accordion": "^1.6.2",
     "vue-router": "~3.3.2",
     "vuex": "~3.4.0"
   },

@@ -1,8 +1,8 @@
 import Api from './Api';
 
 export default {
-    async getAllBanners() {
-        return await Api().get('/get/banner');
+    getAllBanners() {
+        return Api().get('/get/banner');
     },
     deleteBanner(id) {
         return Api().post(`/delete/banner/${id}`)

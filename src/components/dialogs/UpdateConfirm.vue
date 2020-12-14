@@ -1,36 +1,33 @@
 <template>
-  <div
-    class="confirmation_dialog fade-in"
-    :style="isVisible? 'display:flex': 'display:none'"
+  <CModal
+    :show.sync="isVisible"
+    :no-close-on-backdrop="true"
+    :centered="true"
+    title="Confirmation"
+    size="sm"
+    color="warning"
   >
 
-    <div class="confirm_child_box">
-      <span
-        class="delete_icon"
+    Are you sure to change {{type}}
+
+    <template #header>
+      <h6 class="modal-title">Confirmation</h6>
+      <CButtonClose
         @click="isVisible = false"
-      >
-        <i class="fas fa-times"></i>
-      </span>
-      <div class="confirm_heading_text">
-        <p>Are you sure to change this {{type}}?</p>
-      </div>
-      <div class="action_buttons">
-        <div
-          class="btn btn-danger cancel_btn"
-          @click="isVisible = false"
-        >Cancel <i class="fas fa-undo-alt"></i></div>
-        <div
-          class="btn btn-info"
-          @click="updateActiveProduct()"
-        > <span
-            v-if="buttonLoading"
-            class="spinner-grow spinner-grow-sm"
-            role="status"
-            aria-hidden="true"
-          ></span>Change<i class="fas fa-wrench"></i> </div>
-      </div>
-    </div>
-  </div>
+        class="text-white"
+      />
+    </template>
+    <template #footer>
+      <CButton
+        @click="isVisible = false"
+        color="danger"
+      >Discard</CButton>
+      <CButton
+        @click="updateActiveProduct()"
+        color="success"
+      >Accept</CButton>
+    </template>
+  </CModal>
 </template>
 
 <script>
@@ -58,14 +55,20 @@ export default {
   methods: {
     updateActiveProduct () {
       this.buttonLoading = true;
+      console.log(this.type)
 
       if (this.type === 'banner') {
         Promotion.setActiveBanner(this.payload).then(res => {
 
           if (res.status === 200) {
+            console.log(res);
             this.$store.dispatch('updateActiveBanner', res.data);
             this.buttonLoading = false;
             this.isVisible = false;
+            EventBus.$emit('success', "Banner Changed Successfully 🎉")
+
+          } else {
+            EventBus.$emit('error_occur', "Check your internet connection and try again!")
           }
         })
       }
@@ -76,6 +79,10 @@ export default {
             this.$store.dispatch('updateActivePromotion', res.data);
             this.buttonLoading = false;
             this.isVisible = false;
+            EventBus.$emit('success', "Promotion Changed Successfully 🎉")
+
+          } else {
+            EventBus.$emit('error_occur', "Check your internet connection and try again!")
           }
         })
       }
