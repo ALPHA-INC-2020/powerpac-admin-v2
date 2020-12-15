@@ -186,7 +186,7 @@
             </span>
           </CRow>
           <CButton
-            color="primary"
+            color="success"
             block
             :disabled="loading"
             @click="uploadProduct()"

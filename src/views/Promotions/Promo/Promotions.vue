@@ -21,6 +21,13 @@
           </CButton>
         </div>
         <div v-if="loadingPromotion">loading ...</div>
+        <div
+          v-if="!loadingPromotion && !allPromotions.length"
+          class="d-flex justify-content-center"
+        >
+          <NoData content="No Promotion" />
+
+        </div>
         <div v-else>
           <accordion
             v-for="(promotion,index) in allPromotions"
@@ -87,6 +94,13 @@
           </CButton>
         </div>
         <div v-if="loadingBanners">loading ...</div>
+        <div
+          v-if="!loadingBanners && !allBanners.length"
+          class="d-flex justify-content-center"
+        >
+          <NoData content="No Banner" />
+        </div>
+
         <div v-else>
           <accordion
             v-for="(banner,index) in allBanners"
@@ -140,6 +154,7 @@ import SuccessAlert from '@/components/alerts/SuccessAlert'
 import ErrorAlert from '@/components/alerts/ErrorAlert'
 import DeleteDialog from '@/components/dialogs/DeleteDialog'
 import Promotion from '@/apis/Promotion'
+import NoData from '@/components/utils/NoData.vue'
 
 
 export default {
@@ -156,7 +171,8 @@ export default {
     updateConfirm,
     SuccessAlert,
     ErrorAlert,
-    DeleteDialog
+    DeleteDialog,
+    NoData
   },
   computed: {
     ...mapGetters({ allBanners: 'loadAllBanners', allPromotions: 'loadAllPromotions' })

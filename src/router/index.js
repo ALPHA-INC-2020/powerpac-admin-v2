@@ -133,7 +133,7 @@ function configRoutes () {
          {
         path: 'new/banner',
           name: 'NewBanner',
-          component: NewPromotion,
+          component: NewBanner,
           meta: {
             authOnly: true
           }
