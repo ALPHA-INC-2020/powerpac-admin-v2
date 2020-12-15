@@ -13,6 +13,7 @@ const NewProduct = () => import('@/views/Products/newProduct')
 const Promotions = () => import('@/views/Promotions/Promo/Promotions')
 const NewPromotion = () => import('@/views/Promotions/Promo/NewPromotion')
 const NewBanner = () => import('@/views/Promotions/Banner/NewBanner');
+const Faqs = () => import('@/views/faqs/faq.vue')
 
 
 const Colors = () => import('@/views/theme/Colors')
@@ -118,6 +119,14 @@ function configRoutes () {
         path: 'promotions',
           name: 'Promotions',
           component: Promotions,
+          meta: {
+            authOnly: true
+          }
+        },
+        {
+          path: 'faqs',
+          name: 'Faqs',
+          component: Faqs,
           meta: {
             authOnly: true
           }

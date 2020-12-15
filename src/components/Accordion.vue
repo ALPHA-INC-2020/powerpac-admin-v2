@@ -77,6 +77,7 @@ export default {
 
 .accordion {
   width: 100%;
+  height: auto;
   font-family: Lato;
   margin-bottom: 20px;
   border: 1px solid rgb(179, 177, 177);
@@ -84,11 +85,10 @@ export default {
 }
 
 .accordion .header {
-  height: 40px;
+  min-height: 40px;
   line-height: 40px;
   padding: 0 40px 0 8px;
   position: relative;
-  color: #020202;
   cursor: pointer;
 }
 

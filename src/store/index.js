@@ -12,6 +12,9 @@ import {
 import {
   orderModule
 } from './order'
+import {
+  faqModule
+} from './faq'
 
 
 Vue.use(Vuex)
@@ -57,7 +60,8 @@ const modules = {
   productModule: productModule,
   orderModule: orderModule,
   promotionModule: promotionModule,
-  cloudinaryModule: cloudinaryModule
+  cloudinaryModule: cloudinaryModule,
+  faqModule: faqModule
 }
 
 export default new Vuex.Store({

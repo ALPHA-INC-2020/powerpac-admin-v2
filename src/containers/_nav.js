@@ -41,7 +41,7 @@ export default [{
         },
         {
           name: 'FAQS',
-          to: '/base/cards'
+          to: '/faqs'
         },
         {
           name: 'NewPromotion',
