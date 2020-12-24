@@ -7,6 +7,14 @@ export default {
     mixins: [cloudinary],
     methods: {
         uploadBanner() {
+
+            const {banner_title, image} = this.form;
+
+            if(banner_title == '' || image == '') {
+                return;
+            }
+
+            
             this.loading = true;
             this.uploadFileToCloudinary(this.form.image, 'banners').then(res => {
                 Promotion.uploadBanner(this.form).then(res => {

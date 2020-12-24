@@ -28,6 +28,7 @@
           <NoData content="No Promotion" />
 
         </div>
+
         <div v-else>
           <accordion
             v-for="(promotion,index) in allPromotions"

@@ -191,7 +191,6 @@
             :disabled="loading"
             @click="uploadProduct()"
           >
-
             <span v-if="!loading">Create</span>
             <CSpinner
               v-else

@@ -12,6 +12,12 @@ export default {
     mixins: [cloudinary],
     methods: {
         uploadPromotion() {
+
+            const {title, content } = this.form;
+
+            if(title == '' || content == '' ) {
+                return;
+            }
             this.loading = true
             if (this.form.imageURLs.length > 4) {
                 this.exceeded = true;

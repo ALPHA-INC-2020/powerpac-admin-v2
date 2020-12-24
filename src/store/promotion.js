@@ -33,6 +33,7 @@ export const promotionModule = {
     actions: {
         loadBanners( {commit}) {
             return Promotion.getAllBanners().then(res => {
+                console.log(res);
                 commit('SET_BANNERS', res.data)
             })
         },

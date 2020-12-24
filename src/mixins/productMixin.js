@@ -7,6 +7,15 @@ export default {
     mixins: [cloudinary],
     methods: {
         uploadProduct() {
+
+            const { productName, model, brand, rating, productType, promoPrice, sale, details, type} = this.form;
+
+
+            if(productName == '' || model == '' || brand == '' || rating == '' || productType == '' || promoPrice == '' || sale == '' || details.length == 0 || type == '') {
+                return;
+            }
+
+            
             this.loading = true;
             this.images.forEach((file) => {
                 this.uploadFilesToCloudinary(file, 'products').then(({imageURLs}) => {

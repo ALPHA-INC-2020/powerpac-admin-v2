@@ -57,9 +57,7 @@
                     name="cil-x-circle"
                     class="icon"
                   >
-
                   </CIcon>
-
                 </div>
               </div>
 
