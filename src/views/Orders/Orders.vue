@@ -1,6 +1,7 @@
 <template>
   <div>
     <CRow>
+      <OrderDetail />
       <CCol sm="12">
         <CTableWrapper
           statusAlter='status'
@@ -14,6 +15,7 @@
           :deleteAction="{action: 'deleteOrder', apiObj: Order}"
           caption="Orders"
           deleteExist
+          view
           statusUpdate
           :titleButton="{exist: false}"
           edit
@@ -31,7 +33,7 @@
 import CTableWrapper from '../base/Table.vue'
 import { mapGetters } from 'vuex';
 import Order from '@/apis/Order.js'
-
+import OrderDetail from '@/components/OrderDetail'
 
 export default {
   data () {
@@ -46,7 +48,7 @@ export default {
       ]
     }
   },
-  components: { CTableWrapper },
+  components: { CTableWrapper, OrderDetail },
   computed: {
     ...mapGetters({ allOrders: 'loadAllOrders' })
   },

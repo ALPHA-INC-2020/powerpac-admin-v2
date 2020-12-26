@@ -37,7 +37,16 @@
                         color="primary"
                         class="px-4"
                         @click="login()"
-                      >Login</CButton>
+                        :disabled="loading"
+                      >
+                        <span v-if="!loading">Login</span>
+                        <CSpinner
+                          v-else
+                          color="light"
+                          size="sm"
+                        />
+                      </CButton>
+
                     </CCol>
                     <CCol
                       col="6"
@@ -54,6 +63,13 @@
                       >Register now!</CButton>
                     </CCol>
                   </CRow>
+                  <small
+                    v-for="(error, i) in errors.email"
+                    :key="i"
+                    class="text-danger"
+                  >
+                    {{error}}
+                  </small>
                 </CForm>
               </CCardBody>
             </CCard>
@@ -94,27 +110,37 @@ export default {
         email: "",
         password: ""
       },
-      errors: []
+      errors: [],
+      loading: false
     };
   },
 
   methods: {
     login () {
+      const { email, password } = this.form;
+      if (email == '' || password == '') {
+        return;
+      }
+      this.loading = true
       User.login(this.form)
         .then(response => {
-          console.log(response)
-          this.$store.commit("LOGIN", true);
-          localStorage.setItem("token", response.data);
-          this.$router.push({ name: "Dashboard" });
+
+          if (response.status === 200) {
+            this.$store.commit("LOGIN", true);
+            localStorage.setItem("token", response.data);
+            this.$router.push({ name: "Dashboard" });
+            this.loading = false;
+
+          }
         })
         .catch(error => {
+          this.loading = false;
           if (error.response.status === 422) {
             this.errors = error.response.data.errors;
           }
         });
     },
     go2Register () {
-      console.log("here")
       this.$router.push({ name: "Register" })
     }
   }

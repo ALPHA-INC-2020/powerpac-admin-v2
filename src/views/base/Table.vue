@@ -87,8 +87,15 @@
             </td>
           </template>
           <template #actions="{item}">
-            <td>
-
+            <td class="d-flex">
+              <CButton
+                color="primary"
+                size="sm"
+                class="m-2"
+                @click="rowClick(item )"
+              >
+                view
+              </CButton>
               <CDropdown
                 color="primary"
                 toggler-text="action"
@@ -235,6 +242,10 @@ export default {
   mixins: [actionMixin],
   name: 'Table',
   props: {
+    view: {
+      default: false,
+      type: Boolean
+    },
     additional: {
       type: Boolean,
       default: false
@@ -322,6 +333,9 @@ export default {
     }
   },
   methods: {
+    rowClick (order) {
+      EventBus.$emit('onRowClick', order);
+    },
     go2Edit (id) {
       const { route } = this.edit
       this.$router.push({ name: route, params: { id: id } })

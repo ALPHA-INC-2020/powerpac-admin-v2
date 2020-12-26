@@ -18,6 +18,7 @@
                   </template>
                 </CInput>
                 <CInput
+                  type="email"
                   placeholder="Email"
                   autocomplete="email"
                   prepend="@"
@@ -44,6 +45,16 @@
                     <CIcon name="cil-lock-locked" />
                   </template>
                 </CInput>
+                <CInput
+                  placeholder="Register Pass Code"
+                  autocomplete="off"
+                  class="mb-4"
+                  v-model="form.passcode"
+                >
+                  <template #prepend-content>
+                    <CIcon name="cil-lock-locked" />
+                  </template>
+                </CInput>
                 <CButton
                   :color="loading? 'secondary' : 'success' "
                   block
@@ -57,6 +68,16 @@
                   />
                   <span v-else>Create Account</span>
                 </CButton>
+                <small
+                  class="text-danger"
+                  v-for="(err, i) in errors.email"
+                  :key="i"
+                >{{err}}</small>
+                <small
+                  class="text-danger"
+                  v-if="errStatus"
+                >{{errStatus}}</small>
+
                 <p
                   class="text-center mt-3 text-grey "
                   style="text-decoration: none;"
@@ -86,23 +107,42 @@ export default {
         name: "",
         email: "",
         password: "",
-        password_confirmation: ""
+        password_confirmation: "",
+        passcode: ''
       },
-      errors: []
+      errors: [],
+      errStatus: ''
     };
   },
 
   methods: {
     register () {
+      const { name, email, password, password_confirmation, passcode } = this.form;
+      if (name == '' || email == '' || password == '' || password_confirmation == '' || passcode == '') {
+        return;
+      }
       this.loading = true
       User.register(this.form)
-        .then(() => {
+        .then((response) => {
           this.loading = false;
-          this.$router.push({ name: "Login" });
+
+          if (response.status === 200) {
+            this.$router.push({ name: "Login" });
+          } else {
+            this.errStatus = 'There is an error on registration'
+          }
+
         })
         .catch(error => {
+          this.loading = false;
           if (error.response.status === 422) {
+            this.errStatus = ''
             this.errors = error.response.data.errors;
+          }
+
+          if (error.response.status === 405) {
+            this.errors = []
+            this.errStatus = error.response.data.message
           }
         });
     }
