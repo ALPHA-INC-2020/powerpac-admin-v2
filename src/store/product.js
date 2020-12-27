@@ -1,12 +1,16 @@
 import Product from '@/apis/Product'
 export const productModule = {
     state: {
-        allProducts: []
+        allProducts: [],
+        productChart: []
     },
 
     mutations: {
         SET_PRODUCTS(state, payload) {
             state.allProducts = payload;
+        },
+        SET_PRODUCT_CHART(state, payload) {
+            state.productChart = payload;
         },
         DELETE_ONE_PRODUCT(state, payload) {
             state.allProducts.splice(payload, 1);
@@ -34,6 +38,9 @@ export const productModule = {
         getProductById: (state) => (id) => {
           console.log(state)
             return state.allProducts.find(product => product.id === id)
+        },
+        getProductChartData(state) {
+            return state.productChart
         }
     },
     actions: {
@@ -44,6 +51,10 @@ export const productModule = {
         ) {
             return Product.getAllProducts().then((response) => {
                 commit('SET_PRODUCTS', response.data)
+            }).then(() => {
+                Product.getProductChartData().then((res) => {
+                commit('SET_PRODUCT_CHART', res.data);
+            })
             })
         },
         deleteProduct({
@@ -55,9 +66,7 @@ export const productModule = {
             commit('DELETE_ONE_PRODUCT', index)
         },
 
-        updateProduct({
-            commit
-        }, payload) {
+        updateProduct( payload) {
             return Product.updateProduct(payload.id, payload);
         },
         updateSale({

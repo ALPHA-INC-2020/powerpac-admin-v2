@@ -1,6 +1,282 @@
 <template>
   <div>
-    <WidgetsDropdown />
+    <WidgetsDropdown
+      :order="{orderCount: allOrders.length, orderChartData: productChart}"
+      :product="{productCount: allProducts.length, productChartData: productChart}"
+    />
+    <!-- <CCard> -->
+    <!-- <CCardBody class="d-flex"> -->
+    <CContainer fluid>
+      <CRow>
+        <CCol lg="6">
+          <CDataTable
+            class="mb-0 table-outline"
+            hover
+            :items="tableItems"
+            :fields="tableFields"
+            head-color="light"
+            no-sorting
+          >
+            <td
+              slot="avatar"
+              class="text-center"
+              slot-scope="{item}"
+            >
+              <div class="c-avatar">
+                <img
+                  :src="item.avatar.url"
+                  class="c-avatar-img"
+                  alt=""
+                >
+                <span
+                  class="c-avatar-status"
+                  :class="`bg-${item.avatar.status || 'secondary'}`"
+                ></span>
+              </div>
+            </td>
+            <td
+              slot="user"
+              slot-scope="{item}"
+            >
+              <div>{{item.user.name}}</div>
+              <div class="small text-muted">
+                <span>
+                  <template v-if="item.user.new">New</template>
+                  <template v-else>Recurring</template>
+                </span> | Registered: {{item.user.registered}}
+              </div>
+            </td>
+            <td
+              slot="country"
+              slot-scope="{item}"
+              class="text-center"
+            >
+              <CIcon
+                :name="item.country.flag"
+                height="25"
+              />
+            </td>
+            <td
+              slot="usage"
+              slot-scope="{item}"
+            >
+              <div class="clearfix">
+                <div class="float-left">
+                  <strong>{{item.usage.value}}%</strong>
+                </div>
+                <div class="float-right">
+                  <small class="text-muted">{{item.usage.period}}</small>
+                </div>
+              </div>
+              <CProgress
+                class="progress-xs"
+                v-model="item.usage.value"
+                :color="color(item.usage.value)"
+              />
+            </td>
+            <td
+              slot="payment"
+              slot-scope="{item}"
+              class="text-center"
+            >
+              <CIcon
+                :name="item.payment.icon"
+                height="25"
+              />
+            </td>
+            <td
+              slot="activity"
+              slot-scope="{item}"
+            >
+              <div class="small text-muted">Last login</div>
+              <strong>{{item.activity}}</strong>
+            </td>
+          </CDataTable>
+        </CCol>
+        <CCol lg="6">
+          <CDataTable
+            class="mb-0 table-outline"
+            hover
+            :items="tableItems"
+            :fields="tableFields"
+            head-color="light"
+            no-sorting
+          >
+            <td
+              slot="avatar"
+              class="text-center"
+              slot-scope="{item}"
+            >
+              <div class="c-avatar">
+                <img
+                  :src="item.avatar.url"
+                  class="c-avatar-img"
+                  alt=""
+                >
+                <span
+                  class="c-avatar-status"
+                  :class="`bg-${item.avatar.status || 'secondary'}`"
+                ></span>
+              </div>
+            </td>
+            <td
+              slot="user"
+              slot-scope="{item}"
+            >
+              <div>{{item.user.name}}</div>
+              <div class="small text-muted">
+                <span>
+                  <template v-if="item.user.new">New</template>
+                  <template v-else>Recurring</template>
+                </span> | Registered: {{item.user.registered}}
+              </div>
+            </td>
+            <td
+              slot="country"
+              slot-scope="{item}"
+              class="text-center"
+            >
+              <CIcon
+                :name="item.country.flag"
+                height="25"
+              />
+            </td>
+            <td
+              slot="usage"
+              slot-scope="{item}"
+            >
+              <div class="clearfix">
+                <div class="float-left">
+                  <strong>{{item.usage.value}}%</strong>
+                </div>
+                <div class="float-right">
+                  <small class="text-muted">{{item.usage.period}}</small>
+                </div>
+              </div>
+              <CProgress
+                class="progress-xs"
+                v-model="item.usage.value"
+                :color="color(item.usage.value)"
+              />
+            </td>
+            <td
+              slot="payment"
+              slot-scope="{item}"
+              class="text-center"
+            >
+              <CIcon
+                :name="item.payment.icon"
+                height="25"
+              />
+            </td>
+            <td
+              slot="activity"
+              slot-scope="{item}"
+            >
+              <div class="small text-muted">Last login</div>
+              <strong>{{item.activity}}</strong>
+            </td>
+          </CDataTable>
+        </CCol>
+      </CRow>
+      <!-- <CRow
+        sm="12"
+        md="6"
+      >
+       
+      </CRow>
+      <CRow
+        sm="12"
+        md="6"
+      >
+        <CDataTable
+          class="mb-0 table-outline"
+          hover
+          :items="tableItems"
+          :fields="tableFields"
+          head-color="light"
+          no-sorting
+        >
+          <td
+            slot="avatar"
+            class="text-center"
+            slot-scope="{item}"
+          >
+            <div class="c-avatar">
+              <img
+                :src="item.avatar.url"
+                class="c-avatar-img"
+                alt=""
+              >
+              <span
+                class="c-avatar-status"
+                :class="`bg-${item.avatar.status || 'secondary'}`"
+              ></span>
+            </div>
+          </td>
+          <td
+            slot="user"
+            slot-scope="{item}"
+          >
+            <div>{{item.user.name}}</div>
+            <div class="small text-muted">
+              <span>
+                <template v-if="item.user.new">New</template>
+                <template v-else>Recurring</template>
+              </span> | Registered: {{item.user.registered}}
+            </div>
+          </td>
+          <td
+            slot="country"
+            slot-scope="{item}"
+            class="text-center"
+          >
+            <CIcon
+              :name="item.country.flag"
+              height="25"
+            />
+          </td>
+          <td
+            slot="usage"
+            slot-scope="{item}"
+          >
+            <div class="clearfix">
+              <div class="float-left">
+                <strong>{{item.usage.value}}%</strong>
+              </div>
+              <div class="float-right">
+                <small class="text-muted">{{item.usage.period}}</small>
+              </div>
+            </div>
+            <CProgress
+              class="progress-xs"
+              v-model="item.usage.value"
+              :color="color(item.usage.value)"
+            />
+          </td>
+          <td
+            slot="payment"
+            slot-scope="{item}"
+            class="text-center"
+          >
+            <CIcon
+              :name="item.payment.icon"
+              height="25"
+            />
+          </td>
+          <td
+            slot="activity"
+            slot-scope="{item}"
+          >
+            <div class="small text-muted">Last login</div>
+            <strong>{{item.activity}}</strong>
+          </td>
+        </CDataTable>
+      </CRow> -->
+    </CContainer>
+
+    <!-- </CCardBody>
+    </CCard> -->
     <!-- <CCard>
       <CCardBody>
         <CRow>
@@ -110,9 +386,9 @@
           </CCol>
         </CRow>
       </CCardFooter>
-    </CCard> -->
-    <!-- <WidgetsBrand /> -->
-    <!-- <CRow>
+    </CCard>
+    <WidgetsBrand />
+    <CRow>
       <CCol md="12">
         <CCard>
           <CCardHeader>
@@ -530,14 +806,14 @@
 
 <script>
 // import MainChartExample from './charts/MainChartExample'
-// import WidgetsDropdown from './widgets/WidgetsDropdown'
+import WidgetsDropdown from './widgets/WidgetsDropdown'
+import { mapGetters } from 'vuex'
 // import WidgetsBrand from './widgets/WidgetsBrand'
-
 export default {
   name: 'Dashboard',
   components: {
     // MainChartExample,
-    // WidgetsDropdown,
+    WidgetsDropdown,
     // WidgetsBrand
   },
   data () {
@@ -594,14 +870,20 @@ export default {
         }
       ],
       tableFields: [
-        { key: 'avatar', label: '', _classes: 'text-center' },
-        { key: 'user' },
-        { key: 'country', _classes: 'text-center' },
-        { key: 'usage' },
+        { key: 'Customer Name' },
+        { key: 'Address', _classes: 'text-center' },
+        { key: 'Phone' },
         { key: 'payment', label: 'Payment method', _classes: 'text-center' },
-        { key: 'activity' },
+        { key: 'Order Time' },
       ]
     }
+  },
+  computed: {
+    ...mapGetters({ allOrders: 'loadAllOrders', allProducts: 'loadAllProducts', productChart: 'getProductChartData' })
+  },
+  created () {
+    if (this.allOrders.length == 0) this.$store.dispatch('loadOrders');
+    if (this.allProducts.length == 0) this.$store.dispatch('loadProducts');
   },
   methods: {
     color (value) {

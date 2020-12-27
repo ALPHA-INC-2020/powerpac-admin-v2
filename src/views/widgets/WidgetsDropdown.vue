@@ -6,7 +6,7 @@
     >
       <CWidgetDropdown
         color="primary"
-        header="9.823"
+        :header="order.orderCount"
         text="Orders"
       >
         <!-- <template #default>
@@ -26,11 +26,12 @@
         <template #footer>
           <CChartLineSimple
             pointed
-            class="mt-3 mx-3"
+            class="mt-3"
             style="height:70px"
-            :data-points="[65, 59, 84, 84, 51, 55, 40]"
+            background-color="rgba(255,255,255,.2)"
+            :data-points="order.orderChartData"
             point-hover-background-color="primary"
-            label="Members"
+            label="Orders"
             labels="months"
           />
         </template>
@@ -45,7 +46,7 @@
         header="9.823"
         text="Members online"
       >
-        <template #default>
+        <!-- <template #default>
           <CDropdown
             color="transparent p-0"
             placement="bottom-end"
@@ -59,7 +60,7 @@
             <CDropdownItem>Something else here...</CDropdownItem>
             <CDropdownItem disabled>Disabled action</CDropdownItem>
           </CDropdown>
-        </template>
+        </template> -->
         <template #footer>
           <CChartLineSimple
             pointed
@@ -80,10 +81,10 @@
     >
       <CWidgetDropdown
         color="warning"
-        header="9.823"
-        text="Members online"
+        :header="product.productCount"
+        text="Total Products"
       >
-        <template #default>
+        <!-- <template #default>
           <CDropdown
             color="transparent p-0"
             placement="bottom-end"
@@ -96,16 +97,16 @@
             <CDropdownItem>Something else here...</CDropdownItem>
             <CDropdownItem disabled>Disabled action</CDropdownItem>
           </CDropdown>
-        </template>
+        </template> -->
         <template #footer>
           <CChartLineSimple
             class="mt-3"
             style="height:70px"
             background-color="rgba(255,255,255,.2)"
-            :data-points="[78, 81, 80, 45, 34, 12, 40]"
+            :data-points="product.productChartData"
             :options="{ elements: { line: { borderWidth: 2.5 }}}"
             point-hover-background-color="warning"
-            label="Members"
+            label="Products"
             labels="months"
           />
         </template>
@@ -120,7 +121,7 @@
         header="9.823"
         text="Members online"
       >
-        <template #default>
+        <!-- <template #default>
           <CDropdown
             color="transparent p-0"
             placement="bottom-end"
@@ -133,7 +134,7 @@
             <CDropdownItem>Something else here...</CDropdownItem>
             <CDropdownItem disabled>Disabled action</CDropdownItem>
           </CDropdown>
-        </template>
+        </template> -->
         <template #footer>
           <CChartBarSimple
             class="mt-3 mx-3"
@@ -152,6 +153,40 @@
 import { CChartLineSimple, CChartBarSimple } from '../charts/index.js'
 
 export default {
+  props: {
+    order: {
+      orderCount: {
+        type: Number
+      },
+      orderChartData: {
+        type: Array
+      }
+    },
+    todayOrder: {
+      orderCount: {
+        type: Number
+      },
+      orderChartData: {
+        type: Array
+      }
+    },
+    product: {
+      productCount: {
+        type: Number
+      },
+      productChartData: {
+        type: Array
+      }
+    },
+    sales: {
+      saleCount: {
+        type: Number
+      },
+      saleChartData: {
+        type: Array
+      }
+    }
+  },
   name: 'WidgetsDropdown',
   components: { CChartLineSimple, CChartBarSimple }
 }
