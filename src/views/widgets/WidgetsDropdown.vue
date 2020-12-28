@@ -6,7 +6,7 @@
     >
       <CWidgetDropdown
         color="primary"
-        :header="order.orderCount"
+        :header="convert2String(order.orderCount)"
         text="Orders"
       >
         <!-- <template #default>
@@ -37,14 +37,15 @@
         </template>
       </CWidgetDropdown>
     </CCol>
+
     <CCol
       sm="6"
       lg="3"
     >
       <CWidgetDropdown
         color="info"
-        header="9.823"
-        text="Members online"
+        :header="convert2String(todayOrder.orderCount)"
+        text="Today Order"
       >
         <!-- <template #default>
           <CDropdown
@@ -69,7 +70,7 @@
             :data-points="[1, 18, 9, 17, 34, 22, 11]"
             point-hover-background-color="info"
             :options="{ elements: { line: { tension: 0.00001 }}}"
-            label="Members"
+            label="Today Order"
             labels="months"
           />
         </template>
@@ -81,7 +82,7 @@
     >
       <CWidgetDropdown
         color="warning"
-        :header="product.productCount"
+        :header="convert2String(product.productCount)"
         text="Total Products"
       >
         <!-- <template #default>
@@ -118,8 +119,8 @@
     >
       <CWidgetDropdown
         color="danger"
-        header="9.823"
-        text="Members online"
+        :header="convert2String(sales.totalSales)"
+        text="Sale Amount"
       >
         <!-- <template #default>
           <CDropdown
@@ -137,10 +138,11 @@
         </template> -->
         <template #footer>
           <CChartBarSimple
+            :data-points="sales.saleChartData"
             class="mt-3 mx-3"
             style="height:70px"
             background-color="rgb(250, 152, 152)"
-            label="Members"
+            label="Sales"
             labels="months"
           />
         </template>
@@ -179,7 +181,7 @@ export default {
       }
     },
     sales: {
-      saleCount: {
+      totalSales: {
         type: Number
       },
       saleChartData: {
@@ -188,6 +190,12 @@ export default {
     }
   },
   name: 'WidgetsDropdown',
-  components: { CChartLineSimple, CChartBarSimple }
+  components: { CChartLineSimple, CChartBarSimple },
+  methods: {
+    convert2String (value) {
+      return value.toString();
+    }
+  },
+
 }
 </script>

@@ -21,8 +21,6 @@ export default {
     },
     pointHoverBackgroundColor: String,
     dataPoints: {
-      type: Array,
-      default: () => [10, 22, 34, 46, 58, 70, 46, 23, 45, 78, 34, 12]
     },
     label: {
       type: String,

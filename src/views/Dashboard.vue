@@ -1,11 +1,11 @@
 <template>
   <div>
     <WidgetsDropdown
-      :order="{orderCount: allOrders.length, orderChartData: productChart}"
+      :order="{orderCount: allOrders.length, orderChartData: orderChart}"
+      :todayOrder="{orderCount: orderCount}"
+      :sales="{totalSales: totalSale, saleChartData: saleChart}"
       :product="{productCount: allProducts.length, productChartData: productChart}"
     />
-    <!-- <CCard> -->
-    <!-- <CCardBody class="d-flex"> -->
     <CContainer fluid>
       <CRow>
         <CCol lg="6">
@@ -879,11 +879,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({ allOrders: 'loadAllOrders', allProducts: 'loadAllProducts', productChart: 'getProductChartData' })
+    ...mapGetters({ allOrders: 'loadAllOrders', allProducts: 'loadAllProducts', productChart: 'getProductChartData', orderCount: 'loadTodayOrderCount', orderChart: 'getOrderChartData', totalSale: 'getTotalSale', saleChart: 'getSaleChartData' })
   },
   created () {
     if (this.allOrders.length == 0) this.$store.dispatch('loadOrders');
     if (this.allProducts.length == 0) this.$store.dispatch('loadProducts');
+    if (this.orderCount == '') this.$store.dispatch('loadTodayOrderCount');
   },
   methods: {
     color (value) {

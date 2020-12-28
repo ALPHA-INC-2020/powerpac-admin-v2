@@ -22,7 +22,7 @@ export default {
         return Api().post(`/update/isPopular/${payload.id}`, payload)
 
     },
-    getProductChartData(payload) {
+    getProductChartData() {
         return Api().get('/get/product/date');
     }
 }
