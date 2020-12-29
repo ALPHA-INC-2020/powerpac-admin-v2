@@ -22,6 +22,9 @@ export const orderModule = {
         SET_SALE_CHART(state, payload) {
             state.saleChart = payload
         },
+        SET_RECENT(state, payload) {
+            state.recentOrders = payload.data
+        },
         DELETE_ONE_ORDER(state, payload) {
             state.allOrders.splice(payload, 1);
         },
@@ -39,20 +42,28 @@ export const orderModule = {
                 if (res.status === 200) {
                     commit('SET_ORDERS', res.data)
                 }
-            }).then(() => {
-                Order.getOrderChartData().then(res => {
-                commit('SET_ORDER_CHART', res.data);
-                })
-            }).then(() => {
-                Order.getSale().then(res => {
-                    commit('SET_TOTAL_SALE', res.data);
-                })
-            }).then(() => {
-                Order.getSaleChart().then(res => {
-                    commit('SET_SALE_CHART', res.data)
-                })
-            })
+            }).catch((err) => console.error(err))
         },
+        loadOrderChartData({commit}) {
+            return Order.getOrderChartData().then(res => {
+                commit('SET_ORDER_CHART', res.data);
+            }).catch((err) => console.error(err))
+        },
+        loadSaleData({commit}) {
+            return Order.getSale().then(res => {
+                    commit('SET_TOTAL_SALE', res.data);
+                }).catch((err) => console.error(err))
+        },
+        loadSaleChart({commit}) {
+            return Order.getSaleChart().then(res => {
+                    commit('SET_SALE_CHART', res.data)
+                }).catch((err) => console.error(err))
+        },
+        loadRecentOrder({commit}) {
+            return Order.getRecent().then(res => {
+                    commit('SET_RECENT', res.data)
+                }).catch((err) => console.error(err))
+        },  
         updateStatus({commit}, payload) {
             return new Promise((resolve, reject) => {
                 Order.updateStatus(payload).then(res => {
@@ -93,6 +104,9 @@ export const orderModule = {
         },
         getSaleChartData(state) {
             return state.saleChart
+        },
+        getRecentOrder(state) {
+            return state.recentOrders
         }
     }
 }

@@ -7,178 +7,87 @@
       :product="{productCount: allProducts.length, productChartData: productChart}"
     />
     <CContainer fluid>
-      <CRow>
-        <CCol lg="6">
+
+      <CCard>
+        <CCardHeader class="d-flex justify-content-between">
+          Recent Orders
+          <CButton
+            color="primary"
+            size="sm"
+            variant="outline"
+          >see all</CButton>
+
+        </CCardHeader>
+        <CCardBody>
           <CDataTable
             class="mb-0 table-outline"
             hover
-            :items="tableItems"
+            :items="recentOrders"
             :fields="tableFields"
             head-color="light"
             no-sorting
           >
             <td
-              slot="avatar"
-              class="text-center"
+              slot="created_at"
               slot-scope="{item}"
             >
-              <div class="c-avatar">
-                <img
-                  :src="item.avatar.url"
-                  class="c-avatar-img"
-                  alt=""
-                >
-                <span
-                  class="c-avatar-status"
-                  :class="`bg-${item.avatar.status || 'secondary'}`"
-                ></span>
-              </div>
+              <div>{{formatDateInTime(item.created_at)}}</div>
             </td>
             <td
-              slot="user"
+              slot="purchase_type"
               slot-scope="{item}"
+              class="d-flex justify-content-around"
             >
-              <div>{{item.user.name}}</div>
-              <div class="small text-muted">
-                <span>
-                  <template v-if="item.user.new">New</template>
-                  <template v-else>Recurring</template>
-                </span> | Registered: {{item.user.registered}}
-              </div>
+              <img
+                :src="getPurchaseType(item.purchase_type)"
+                alt=""
+                class="purchase_icon"
+              >
+
+              <p>{{item.purchase_type}}</p>
             </td>
-            <td
-              slot="country"
-              slot-scope="{item}"
-              class="text-center"
-            >
-              <CIcon
-                :name="item.country.flag"
-                height="25"
-              />
-            </td>
-            <td
-              slot="usage"
-              slot-scope="{item}"
-            >
-              <div class="clearfix">
-                <div class="float-left">
-                  <strong>{{item.usage.value}}%</strong>
-                </div>
-                <div class="float-right">
-                  <small class="text-muted">{{item.usage.period}}</small>
-                </div>
-              </div>
-              <CProgress
-                class="progress-xs"
-                v-model="item.usage.value"
-                :color="color(item.usage.value)"
-              />
-            </td>
-            <td
-              slot="payment"
-              slot-scope="{item}"
-              class="text-center"
-            >
-              <CIcon
-                :name="item.payment.icon"
-                height="25"
-              />
-            </td>
-            <td
-              slot="activity"
-              slot-scope="{item}"
-            >
-              <div class="small text-muted">Last login</div>
-              <strong>{{item.activity}}</strong>
-            </td>
+
           </CDataTable>
-        </CCol>
-        <CCol lg="6">
+        </CCardBody>
+      </CCard>
+      <CCard>
+        <CCardHeader>
+          Recent Orders
+        </CCardHeader>
+        <CCardBody>
           <CDataTable
             class="mb-0 table-outline"
             hover
-            :items="tableItems"
+            :items="recentOrders"
             :fields="tableFields"
             head-color="light"
             no-sorting
           >
             <td
-              slot="avatar"
-              class="text-center"
+              slot="customer_name"
               slot-scope="{item}"
             >
-              <div class="c-avatar">
-                <img
-                  :src="item.avatar.url"
-                  class="c-avatar-img"
-                  alt=""
-                >
-                <span
-                  class="c-avatar-status"
-                  :class="`bg-${item.avatar.status || 'secondary'}`"
-                ></span>
-              </div>
-            </td>
-            <td
-              slot="user"
-              slot-scope="{item}"
-            >
-              <div>{{item.user.name}}</div>
+              <div>{{item.customer_name}}</div>
               <div class="small text-muted">
                 <span>
-                  <template v-if="item.user.new">New</template>
-                  <template v-else>Recurring</template>
-                </span> | Registered: {{item.user.registered}}
+                  <!-- <template ">New</template> -->
+                  <template>Recurring</template>
+                </span> | Registered:
               </div>
             </td>
             <td
-              slot="country"
+              slot="created_at"
               slot-scope="{item}"
-              class="text-center"
             >
-              <CIcon
-                :name="item.country.flag"
-                height="25"
-              />
+              <div>{{formatDateInTime(item.created_at)}}</div>
             </td>
             <td
-              slot="usage"
+              slot="purchase_type"
               slot-scope="{item}"
-            >
-              <div class="clearfix">
-                <div class="float-left">
-                  <strong>{{item.usage.value}}%</strong>
-                </div>
-                <div class="float-right">
-                  <small class="text-muted">{{item.usage.period}}</small>
-                </div>
-              </div>
-              <CProgress
-                class="progress-xs"
-                v-model="item.usage.value"
-                :color="color(item.usage.value)"
-              />
-            </td>
-            <td
-              slot="payment"
-              slot-scope="{item}"
-              class="text-center"
-            >
-              <CIcon
-                :name="item.payment.icon"
-                height="25"
-              />
-            </td>
-            <td
-              slot="activity"
-              slot-scope="{item}"
-            >
-              <div class="small text-muted">Last login</div>
-              <strong>{{item.activity}}</strong>
-            </td>
+            >test {{item.purchase_type}}</td>
           </CDataTable>
-        </CCol>
-      </CRow>
+        </CCardBody>
+      </CCard>
       <!-- <CRow
         sm="12"
         md="6"
@@ -808,6 +717,7 @@
 // import MainChartExample from './charts/MainChartExample'
 import WidgetsDropdown from './widgets/WidgetsDropdown'
 import { mapGetters } from 'vuex'
+import helper from '../helpers/index'
 // import WidgetsBrand from './widgets/WidgetsBrand'
 export default {
   name: 'Dashboard',
@@ -870,23 +780,33 @@ export default {
         }
       ],
       tableFields: [
-        { key: 'Customer Name' },
-        { key: 'Address', _classes: 'text-center' },
-        { key: 'Phone' },
-        { key: 'payment', label: 'Payment method', _classes: 'text-center' },
-        { key: 'Order Time' },
+        { key: 'customer_name' },
+        { key: 'customer_address', _classes: 'text-center', label: 'Address' },
+        { key: 'phone_no', label: 'Phone' },
+        { key: 'purchase_type', label: 'Payment method', _classes: 'text-center' },
+        { key: 'created_at', label: "Order Time" },
       ]
     }
   },
   computed: {
-    ...mapGetters({ allOrders: 'loadAllOrders', allProducts: 'loadAllProducts', productChart: 'getProductChartData', orderCount: 'loadTodayOrderCount', orderChart: 'getOrderChartData', totalSale: 'getTotalSale', saleChart: 'getSaleChartData' })
+    ...mapGetters({ allOrders: 'loadAllOrders', allProducts: 'loadAllProducts', productChart: 'getProductChartData', orderCount: 'loadTodayOrderCount', orderChart: 'getOrderChartData', totalSale: 'getTotalSale', saleChart: 'getSaleChartData', recentOrders: 'getRecentOrder' })
   },
   created () {
     if (this.allOrders.length == 0) this.$store.dispatch('loadOrders');
     if (this.allProducts.length == 0) this.$store.dispatch('loadProducts');
     if (this.orderCount == '') this.$store.dispatch('loadTodayOrderCount');
+    if (this.orderChart.length == 0) this.$store.dispatch('loadOrderChartData');
+    if (this.totalSale == '') this.$store.dispatch('loadSaleData');
+    if (this.saleChart.length == 0) this.$store.dispatch('loadSaleChart');
+    if (this.recentOrders == '') this.$store.dispatch('loadRecentOrder');
   },
   methods: {
+    getPurchaseType (value) {
+      return helper.getPurchaseType(value)
+    },
+    formatDateInTime (date_time) {
+      return new Date(date_time).toLocaleString()
+    },
     color (value) {
       let $color
       if (value <= 25) {
@@ -903,3 +823,11 @@ export default {
   }
 }
 </script>
+
+
+<style scoped>
+.purchase_icon {
+  height: 30px;
+  width: 30px;
+}
+</style>
