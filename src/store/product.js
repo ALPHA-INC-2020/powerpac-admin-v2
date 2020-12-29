@@ -2,7 +2,8 @@ import Product from '@/apis/Product'
 export const productModule = {
     state: {
         allProducts: [],
-        productChart: []
+        productChart: [],
+        recentAddedData: []
     },
 
     mutations: {
@@ -29,6 +30,9 @@ export const productModule = {
             }else {
             state.allProducts[index].isPopular = !payload.status
             }
+        },
+        SET_RECENT_ADDED_PRODUCT(state, payload) {
+            state.recentAddedData = payload.data;
         }
     },
     getters: {
@@ -41,6 +45,9 @@ export const productModule = {
         },
         getProductChartData(state) {
             return state.productChart
+        },
+        getRecentAddedProduct(state) {
+            return state.recentAddedData
         }
     },
     actions: {
@@ -93,6 +100,13 @@ export const productModule = {
             })
         
         },
+                loadRecentAddedData({commit}) {
+            return Product.getRecentAddedData().then(res => {
+                if(res.status === 200) {
+                    commit('SET_RECENT_ADDED_PRODUCT', res.data);
+                }
+            })
+        }
 
     }
 }

@@ -24,5 +24,8 @@ export default {
     },
     getProductChartData() {
         return Api().get('/get/product/date');
+    },
+    getRecentAddedData() {
+        return Api().get('product/get/recent');
     }
 }

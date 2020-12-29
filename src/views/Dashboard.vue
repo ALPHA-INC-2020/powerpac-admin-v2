@@ -12,6 +12,7 @@
         <CCardHeader class="d-flex justify-content-between">
           Recent Orders
           <CButton
+            to='/products'
             color="primary"
             size="sm"
             variant="outline"
@@ -51,30 +52,25 @@
         </CCardBody>
       </CCard>
       <CCard>
-        <CCardHeader>
-          Recent Orders
+        <CCardHeader class="d-flex justify-content-between">
+          Recent Added Products
+          <CButton
+            color="primary"
+            size="sm"
+            variant="outline"
+            to='/orders'
+          >see all</CButton>
+
         </CCardHeader>
         <CCardBody>
           <CDataTable
             class="mb-0 table-outline"
             hover
-            :items="recentOrders"
-            :fields="tableFields"
+            :items="recentAddedProducts"
+            :fields="recentProductTableFields"
             head-color="light"
             no-sorting
           >
-            <td
-              slot="customer_name"
-              slot-scope="{item}"
-            >
-              <div>{{item.customer_name}}</div>
-              <div class="small text-muted">
-                <span>
-                  <!-- <template ">New</template> -->
-                  <template>Recurring</template>
-                </span> | Registered:
-              </div>
-            </td>
             <td
               slot="created_at"
               slot-scope="{item}"
@@ -85,6 +81,13 @@
               slot="purchase_type"
               slot-scope="{item}"
             >test {{item.purchase_type}}</td>
+
+            <td
+              slot="user_id"
+              slot-scope="{item}"
+            >
+              {{item.user.name}}
+            </td>
           </CDataTable>
         </CCardBody>
       </CCard>
@@ -785,11 +788,17 @@ export default {
         { key: 'phone_no', label: 'Phone' },
         { key: 'purchase_type', label: 'Payment method', _classes: 'text-center' },
         { key: 'created_at', label: "Order Time" },
+      ],
+      recentProductTableFields: [
+        { key: 'productName' },
+        { key: 'model' },
+        { key: 'created_at', label: "Add at" },
+        { key: 'user_id', label: 'Add by' }
       ]
     }
   },
   computed: {
-    ...mapGetters({ allOrders: 'loadAllOrders', allProducts: 'loadAllProducts', productChart: 'getProductChartData', orderCount: 'loadTodayOrderCount', orderChart: 'getOrderChartData', totalSale: 'getTotalSale', saleChart: 'getSaleChartData', recentOrders: 'getRecentOrder' })
+    ...mapGetters({ allOrders: 'loadAllOrders', allProducts: 'loadAllProducts', productChart: 'getProductChartData', orderCount: 'loadTodayOrderCount', orderChart: 'getOrderChartData', totalSale: 'getTotalSale', saleChart: 'getSaleChartData', recentOrders: 'getRecentOrder', recentAddedProducts: 'getRecentAddedProduct' })
   },
   created () {
     if (this.allOrders.length == 0) this.$store.dispatch('loadOrders');
@@ -799,6 +808,7 @@ export default {
     if (this.totalSale == '') this.$store.dispatch('loadSaleData');
     if (this.saleChart.length == 0) this.$store.dispatch('loadSaleChart');
     if (this.recentOrders == '') this.$store.dispatch('loadRecentOrder');
+    if (this.recentAddedProducts.length == 0) this.$store.dispatch('loadRecentAddedData');
   },
   methods: {
     getPurchaseType (value) {
