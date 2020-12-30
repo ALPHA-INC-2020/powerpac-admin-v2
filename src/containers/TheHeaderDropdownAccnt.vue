@@ -23,7 +23,7 @@
     >
       <strong>Settings</strong>
     </CDropdownHeader>
-    <CDropdownItem>
+    <CDropdownItem to='/profile'>
       <CIcon name="cil-user" /> Profile
     </CDropdownItem>
     <CDropdownItem @click="logout()">

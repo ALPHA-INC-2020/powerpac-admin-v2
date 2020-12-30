@@ -15,5 +15,14 @@ export default {
 
   auth() {
     return Api().get("/user");
+  },
+  profile() {
+    return Api().get('/get/profile')
+  },
+  changePassword(payload) {
+    return Api().post('/change/password', payload)
+  },
+  changeName(payload) {
+    return Api().post('/change/name', payload);
   }
 };
