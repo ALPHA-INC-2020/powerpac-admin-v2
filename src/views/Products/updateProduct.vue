@@ -199,20 +199,17 @@
         })
       },
       checkE() {
-        console.log(this.images.length);
-        console.log(this.form.imageURLs.length)
         if(this.images.length === this.form.imageURLs.length) {
           this.updateProductInStore();
         }
       },
       updateProductInStore() {
+        // console.log(this.form);
         this.$store
           .dispatch('updateProduct', this.form)
           .then(res => {
-            console.log(res)
             if (res.status === 200) {
               this.loading = false;
-              console.log('success')
             } else {
             console.log('error')
             }

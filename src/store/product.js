@@ -40,7 +40,6 @@ export const productModule = {
             return state.allProducts
         },
         getProductById: (state) => (id) => {
-          console.log(state)
             return state.allProducts.find(product => product.id === id)
         },
         getProductChartData(state) {
@@ -73,7 +72,7 @@ export const productModule = {
             commit('DELETE_ONE_PRODUCT', index)
         },
 
-        updateProduct( payload) {
+        updateProduct({commit}, payload) {
             return Product.updateProduct(payload.id, payload);
         },
         updateSale({
@@ -98,7 +97,7 @@ export const productModule = {
                      commit('UPDATE_ADDITIONAL_STATUS', payload)
                  }).catch(err => reject(err));
             })
-        
+
         },
                 loadRecentAddedData({commit}) {
             return Product.getRecentAddedData().then(res => {

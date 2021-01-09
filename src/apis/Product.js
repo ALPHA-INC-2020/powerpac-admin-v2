@@ -10,7 +10,8 @@ export default {
             return Api().post(`/delete/product/${id}`);
     },
     updateProduct(id, data) {
-        return Api().post(`/update/product/${id}`, data)
+      console.log(id);
+        return Api().post(`/update/product/2`, data)
     },
     updateSale(payload) {
         return Api().post(`/update/sale/${payload.id}`, payload)
