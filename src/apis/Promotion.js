@@ -23,7 +23,7 @@ export default {
         return Api().post(`/delete/promotion/${id}`);
     },
     createPromotion(payload) {
-        return Api().post('/create/promotion/', payload)
+        return Api().post('/create/promotion', payload)
     }
 
 }
