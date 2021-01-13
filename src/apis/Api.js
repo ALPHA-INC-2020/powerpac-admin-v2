@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 let BaseApi = axios.create({
-    // baseURL: 'http://localhost:8000/api'
-    baseURL: "https://api.unionpowerpac.com.mm/api"
+    baseURL: 'http://localhost:8000/api'
+        // baseURL: "https://api.unionpowerpac.com.mm/api"
 });
 
 

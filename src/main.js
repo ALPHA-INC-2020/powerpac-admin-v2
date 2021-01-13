@@ -12,12 +12,12 @@ Vue.prototype.$log = console.log.bind(console)
 export const EventBus = new Vue();
 
 new Vue({
-  el: '#app',
-  router,
-  store,
-  icons,
-  template: '<App/>',
-  components: {
-    App
-  }
+    el: '#app',
+    router,
+    store,
+    icons,
+    template: '<App/>',
+    components: {
+        App
+    }
 })

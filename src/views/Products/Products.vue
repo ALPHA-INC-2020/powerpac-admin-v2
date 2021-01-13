@@ -13,7 +13,7 @@
           :deleteAction="{action: 'deleteProduct', apiObj: Product}"
           deleteExist
           statusUpdate
-          :titleButton="{exist: true, link: 'newProduct', buttonText: 'Create New Product'}"
+          :titleButton="{link: 'newProduct', buttonText: 'Create New Product'}"
           :edit="{exist: true, route: 'updateProduct'}"
           newRelease
           popular

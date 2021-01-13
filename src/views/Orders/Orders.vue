@@ -17,7 +17,6 @@
           deleteExist
           view
           statusUpdate
-          :titleButton="{exist: false}"
           edit
           :statusOptions="options"
           :fields=" ['id', 'customer_name', 'customer_address', 'phone_no', 'email', 'status', 'actions']"

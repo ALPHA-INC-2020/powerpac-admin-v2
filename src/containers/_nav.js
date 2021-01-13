@@ -33,6 +33,12 @@ export default [{
             icon: 'cil-layers'
         },
         {
+            _name: 'CSidebarNavItem',
+            name: 'Messages',
+            to: '/messages',
+            icon: 'cil-layers'
+        },
+        {
             _name: 'CSidebarNavTitle',
             _children: ['PAGES']
         },

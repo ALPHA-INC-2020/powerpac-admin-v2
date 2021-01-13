@@ -15,7 +15,7 @@
               class="mr-3"
               color="primary"
               shape="pill"
-              v-show="titleButton.exist"
+              v-if="titleButton"
             >
               <CIcon name="cil-plus" />&nbsp;{{titleButton.buttonText}}
             </CButton>
@@ -87,12 +87,13 @@
             </td>
           </template>
           <template #actions="{item}">
+            <div v-if="!emailReply">
             <td class="d-flex">
               <CButton
                 color="primary"
                 size="sm"
                 class="m-2"
-                @click="rowClick(item )"
+                @click="rowClick(item)"
               >
                 view
               </CButton>
@@ -130,11 +131,40 @@
                 >{{item.isPopular? 'remove from trending now': 'add to trending now'}}</CDropdownItem>
               </CDropdown>
             </td>
+            </div>
+            <div v-else>
+              <td>
+              <CButton
+                color="primary"
+                size="sm"
+                class="m-2"
+                @click="openEmailReplyModal(item)"
+              >
+              <CIcon name="cil-share"></CIcon>
+                reply
+              </CButton>
+
+              </td>
+            </div>
+            
+          </template>
+          <template #content="{item}">
+            <td>
+              {{item.content.slice(0,10)}}
+            </td>
+          </template>
+          <!-- create at with detail -->
+          <template #created_at="{item}">
+            <td>
+            {{formatDateInTime(item.created_at)}}
+
+            </td>
           </template>
         </CDataTable>
       </CCardBody>
 
     </CCard>
+    <!-- delete confirm model -->
     <CModal
       :show.sync="deleteModal"
       :no-close-on-backdrop="true"
@@ -170,6 +200,8 @@
         </CButton>
       </template>
     </CModal>
+
+    <!-- stauts update model -->
     <CModal
       :show.sync="statusUpdateModal"
       :no-close-on-backdrop="true"
@@ -220,7 +252,44 @@
       </template>
     </CModal>
 
+    <CModal
+      :show.sync="emailReplyModal"
+      :no-close-on-backdrop="true"
+      :centered="true"
+      title="Reply"
+      size="lg"
+      color="primary"
+    >
+
+    <div v-if="!emailDone">
+      <CTextarea type="text" v-model="message" aria-rowcount="20"></CTextarea>
+          <CButton  @click="sendEmail()" :disabled="loading" color="primary">{{loading ? 'Sending' : 'Send'}}</CButton>
+    </div>
+
+    <div v-else>
+      Email sent to {{clientEmail}}
+    </div>
+  
+
+      <template #header>
+        <h6 class="modal-title">Reply to {{clientEmail}}</h6>
+        <CButtonClose
+          @click="emailReplyModal = false; emailDone = false;"
+          class="text-white"
+        />
+      </template>
+      <template #footer>
+        <CButton
+          @click="emailReplyModal = false; emailDone = false;"
+          color="danger"
+        >Cancel</CButton>
+      </template>
+    </CModal>
+
     <AdditionalStatusDialog />
+
+
+    <!-- email reply -->
 
   </div>
 
@@ -233,15 +302,19 @@ import actionMixin from '@/mixins/actionMixin'
 import SuccessAlert from '@/components/alerts/SuccessAlert'
 import ErrorAlert from '@/components/alerts/ErrorAlert'
 import AdditionalStatusDialog from '@/components/dialogs/AdditionalStatusDialog'
+import Email from '@/apis/Email.js'
 export default {
   components: {
     SuccessAlert,
     ErrorAlert,
-    AdditionalStatusDialog
+    AdditionalStatusDialog,
   },
   mixins: [actionMixin],
   name: 'Table',
   props: {
+    emailReply :{
+      default: false
+    },
     view: {
       default: false,
       type: Boolean
@@ -252,7 +325,6 @@ export default {
     },
     statusOptions: {
       type: Array,
-      required: true
     },
     updateAction: {
       action: {
@@ -268,10 +340,6 @@ export default {
       }
     },
     titleButton: {
-      exist: {
-        type: Boolean,
-        default: false
-      },
       link: {
         type: String
       },
@@ -295,7 +363,7 @@ export default {
       },
       route: {
         type: String
-      }
+      },
     },
     newRelease: {
       type: Boolean,
@@ -322,10 +390,16 @@ export default {
   },
   data () {
     return {
+      message: '',
       status: '',
+      clientEmail: '',
+      clientName: '',
+      loading: false,
       deleteModal: false,
+      emailReplyModal: false,
       statusUpdateModal: false,
       deleteButtonLoading: false,
+      emailDone : false,
       deleteId: '',
       deleteSuccessMsg: 'Delete Success!',
       deleteErrorMsg: 'Error On Delete. Try Again!',
@@ -333,13 +407,37 @@ export default {
     }
   },
   methods: {
+    sendEmail() {
+      this.loading = true;
+
+      var payload = {
+        to_name: this.clientName,
+        sendToEmail : this.clientEmail,
+        message: this.message
+      }
+
+      Email.sendEmail(payload).then(res => {
+        if(res.status === 200) {
+        this.loading = false;
+        this.emailDone = true;
+        this.message = ''
+        }
+      })
+  
+    },
+    setLoading(value){
+      this.loading = value
+    },
+    formatDateInTime (date) {
+      return new Date(date).toLocaleString()
+    },
     rowClick (order) {
       EventBus.$emit('onRowClick', order);
     },
     go2Edit (id) {
       const { route } = this.edit
       this.$router.push({ name: route, params: { id: id } })
-    },
+    },  
     updateSale () {
       let payload = {
         id: this.statusId,
@@ -385,6 +483,11 @@ export default {
     openStatusModal (item) {
       this.statusId = item.id
       this.statusUpdateModal = true
+    },
+    openEmailReplyModal ({email, name}) {
+      this.clientEmail = email;
+      this.clientName = name;
+      this.emailReplyModal = true
     },
     getBadge (status) {
       return status === 'complete'
